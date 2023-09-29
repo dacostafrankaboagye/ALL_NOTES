@@ -5,7 +5,11 @@
 # Kotlin 
 
 - released in 2016 by JetBrains
+- In 2016, the first official stable version was released (Kotlin v1.0)
 - Being a general-purpose programming language
+-  a statically typed language for the JVM, Android and the browser.
+- offers developers the ability to extend the functionality of classes without having to use inheritance.
+- Kotlin offers type inference
 - used for:
     - Android development
     - web development
@@ -18,6 +22,30 @@ The following applications use Kotlin in their tech stack:
 - Pinterest
 - The .kt extension signifies that the file contains Kotlin code.
 
+
+    Chet Haase, the chief advocate for Android, said: "We understand that not 
+    everybody is on Kotlin right now, but we believe that you should get there".
+
+- Application platforms for Kotlin: JVM, Android, JS, Native
+- developers can use Kotlin as the only language for their projects without Java at all.
+- create mobile applications for Android, server-side development,
+   develop client-side web applications( run them in a browser)
+- Kotlin is designed as a pragmatic language, which means that its main purpose is
+   solving real-world problems rather than completing research purposes
+
+-  supports multiple programming paradigms, such as imperative programming,
+  object-oriented programming, generic programming, functional programming, and more
+- offers tools like anonymous functions and higher-order functions,
+  which allow developers to easily create abstractions over existing code
+- all popular types of development tools, such as IntelliJ IDEA, Eclipse,
+  and Android Studio, are compatible with it
+- kt will aloow you to
+    - Write server-side and desktop applications
+    - Develop frameworks and libraries
+    - Write mobile applications
+
+
+  
 ---
 
 
@@ -66,11 +94,12 @@ The JVM is responsible for executing code as instructions.
 
 # variables 
 
-    read-only variables with val >> recommended
+    read-only variables with val >> recommended == value
 
-    mutable variables with var >> meaning it can be reassigned >> decalre as var only when necessary
+    mutable variables with var >> meaning it can be reassigned >> decalre as var only when necessary == varaible
 
-    top level variables - Variables can be declared outside the main() function at the beginning of your program
+    top level variables - Variables can be declared outside the main() 
+    function at the beginning of your program
 
     val x = 12  // read only - type is inferred
     val y:Int = 23  // read only
@@ -91,6 +120,40 @@ The JVM is responsible for executing code as instructions.
         print(theArea)
     }
 
+
+---
+
+# Basics
+
+```kt
+
+fun main(){
+    val greetings: String = "Hello, " 
+    val name: String = "Frank"
+    var result: String = greetings.plus(name)
+    println(result)
+}
+
+```
+
+-  basic literals in Kotlin: integer numbers, characters, and strings.
+-  Kotlin has many other literals too
+
+
+## Intgers
+    0, 1, 2, 1_000_000, 1__000_000, 1_2_3
+```kt
+val monthlySalary: Int = 10_000_000 
+print(monthlySalary)
+```
+## Characters
+    wrap a symbol in single quotes
+    A', 'z', '0', '1',' ','$'
+    A character cannot include two or 
+    more digits or letters because it represents a single symbol.
+
+## Strings
+     wrap characters in double quotes
 
 ---
 
