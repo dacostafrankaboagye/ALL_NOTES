@@ -42,6 +42,8 @@ rather than creating directories.
     - returning an HttpResponse object 
     - or raise an exception such as Http404. 
     (The rest is up to you)
+
+- Django provides a test Client to simulate a user interacting with the code at the view level - use it in the test.py or shell
  
 
 
@@ -146,6 +148,14 @@ from django.db import models
 
     fom django.views import ... 
         - generic
+
+    from django.test import ... 
+        - TestCase 
+        - Client 
+
+    from django.test.utils import ... 
+        -  setup_test_environment
+
 
 
 
@@ -549,3 +559,110 @@ site.
 # Note - Important 
 
 -  race condition
+
+
+
+# Test 
+- in the test.py
+- the testing system will automatically find tests in any file whose name begins with test
+samples
+
+```py
+from django.test import TestCase
+from django.utils import timezone
+import datetime 
+from .models import Question 
+
+class QuestionModelTest(TestCase):
+
+    def test_was_published_recently_with_future_question(self):
+        '''     
+            was_published_recently() returns False for questions whose pub_date
+            is in the future.
+        '''
+        time = timezone.now() + datetime.timedelta(days=30)
+        future_question = Question(pub_date=time)
+        self.assertIs(future_question.was_published_recently(), False)
+        
+
+# in shell 
+#python manage.py test polls  
+# 
+'''
+- looks for test in polls' app
+- found a subclass of the django.test.TestCase
+- creates/created a special database for testing 
+- looks for methods - starting with test
+'''
+
+class QuestionModelTest(TestCase):
+
+    def test_was_published_recently_with_future_question(self):
+        '''     
+            was_published_recently() returns False for questions whose pub_date
+            is in the future.
+        '''
+        time = timezone.now() + datetime.timedelta(days=30)
+        future_question = Question(pub_date=time)
+        self.assertIs(future_question.was_published_recently(), False)
+
+    def test_was_published_recently_with_old_question(self):
+        '''
+            was_published_recently() returns False for questions whose pub_date
+            is older than 1 day.
+        '''
+        time = timezone.now() - datetime.timedelta(days=1, seconds=1)
+        old_question = Question(pub_date = time) 
+        self.assertIs(old_question.was_published_recently(), False)
+
+    def test_was_published_recently_with_recent_question(self):
+        '''
+        was_published_recently() returns True for questions whose pub_date
+        is within the last day.
+        '''
+        time = timezone.now() - datetime.timedelta(hours=23, minutes=59, seconds=59)
+        recent_question = Question(pub_date=time)
+        self.assertIs(recent_question.was_published_recently(), True)
+
+
+```
+
+
+```py
+# in shell
+
+>>from django.test.utils import setup_test_environment
+>>setup_test_environment()
+>>from django.test import Client
+>> # create an instance of the client for our use
+>> client = Client()
+>>> # get a response from '/'
+>>> response = client.get('/')  
+>>> response.status_code  # 404
+>>> # on the other hand we should expect to find something at '/polls/'
+>>> # we'll use 'reverse()' rather than a hardcoded URL
+>>> from django.urls import reverse
+>>> response = client.get(reverse('polls:index'))
+>>> response.status_code  # 200 
+>>> response.content
+>>> response.context
+'''
+[{'True': True, 'False': False, 'None': None}, {'csrf_token': <SimpleLazyObject: <function csrf.<locals>._get_val at 0x0000012D6CF231F0>>, 'request': <WSGIRequest: GET '/polls/'>, 'user': <SimpleLazyObject: <function AuthenticationMiddleware.process_request.<locals>.<lambda> at 0x0000012D6CF23160>>, 'perms': PermWrapper(<SimpleLazyObject: <function AuthenticationMiddleware.process_request.<locals>.<lambda> at 0x0000012D6CF23160>>), 'messages': <FallbackStorage: request=<WSGIRequest: GET '/polls/'>>, 'DEFAULT_MESSAGE_LEVELS': {'DEBUG': 10, 'INFO': 20, 'SUCCESS': 25, 'WARNING': 30, 'ERROR': 40}}, {}, {'paginator': None, 'page_obj': None, 'is_paginated': False, 'object_list': <QuerySet [<Question: What's up?>]>, 'latest_question_list': <QuerySet [<Question: What's up?>]>, 'view': <polls.views.IndexView object at 0x0000012D6CE8DD60>}]
+'''
+>>> response.context['latest_question_list']
+'''
+<QuerySet [<Question: What's up?>]>
+'''
+
+
+
+
+'''
+setup_test_environment() installs a template renderer which will allow us to examine some additional attributes
+on responses such as response.context that otherwise wouldn’t be available.
+that this method does not setup
+a test database, so it will be run against the existing database
+'''
+
+
+```
