@@ -194,7 +194,7 @@ print(monthlySalary)
     Properties of a class can be listed in its declaration or body.
     The default constructor with parameters listed in the class declaration is available automatically
 
-
+```kt
     class Pythagoras(var oppositeValue:Double, var adjascentValue:Double){
         var hypothenus = Math.sqrt(Math.pow(oppositeValue,2.toDouble())+ Math.pow(adjascentValue,2.toDouble()))
     }
@@ -203,58 +203,59 @@ print(monthlySalary)
         val theP = Pythagoras(2.0,4.0)
         println("${theP.hypothenus}")
     }
-
+```
 
     Inheritance between classes is declared by a colon (:). Classes are final by default; to make a class inheritable, mark it as open.
 
 
-
+```kt
     open class Shape
 
     class Rectangle(var height: Double, var length: Double): Shape() {
         var perimeter = (height + length) * 2
     }
 
-
+```
 
 # String Templates
     - val customers = 10
     - println("There are $customers customers")
 
+	
+	
+	
+	+=, -=, *=, /=, and %= are augmented assignment operators
+	
+	
+	Integers  = Byte, Short, Int, Long
+	Unsigned integers = UByte, UShort, UInt, ULong
+	Floating-point numbers = Float, Double
+	Booleans = Boolean
+	Characters =  Char
+	Strings =  String
+	
+	    val a:Int = 1000
+	    val b:String = "log message"
+	    val c:Double = 3.14
+	    val d:Long = 100_000_000_000_000
+	    val e:Boolean = false
+	    val f:Char = '\n'
 
+---
 
+# Collections  
+	(each collection can be mutable or read only)
+	Lists  = Ordered collections of items
+	Sets  = Unique unordered collections of items
+	Maps  = Sets of key-value pairs where keys are unique and map to only one value
 
-+=, -=, *=, /=, and %= are augmented assignment operators
-
-
-Integers  = Byte, Short, Int, Long
-Unsigned integers = UByte, UShort, UInt, ULong
-Floating-point numbers = Float, Double
-Booleans = Boolean
-Characters =  Char
-Strings =  String
-
-    val a:Int = 1000
-    val b:String = "log message"
-    val c:Double = 3.14
-    val d:Long = 100_000_000_000_000
-    val e:Boolean = false
-    val f:Char = '\n'
-
-
-
-Collections  (each collection can be mutable or read only)
-Lists  = Ordered collections of items
-Sets  = Unique unordered collections of items
-Maps  = Sets of key-value pairs where keys are unique and map to only one value
-
-
+---
 
 # List
-read only list = use  listOf 
-mutableList = use  mutableListOf
-Kotlin can infer the type of items stored. add the type within angled brackets <>
-
+	read only list = use  listOf 
+	mutableList = use  mutableListOf
+	Kotlin can infer the type of items stored. add the type within angled brackets <>
+```kt
     //read only list
     val myCourses:List<String> = listOf("E-math", "English")
     
@@ -301,12 +302,15 @@ Kotlin can infer the type of items stored. add the type within angled brackets <
     firstNames.remove("Ben")  // [Frank, Prince]
     println("Ben" in firstNames)  // false
 
+```
 
-
+---
 
 # Set
-sets are unordered, you can't access an item at a particular index
 
+	sets are unordered, you can't access an item at a particular index
+
+```kt
     // read only Set 
     val mySetOfNumbers: Set<Int> = setOf(1,4,6,7)
     
@@ -339,11 +343,14 @@ sets are unordered, you can't access an item at a particular index
     println("fruits  = $fruit")  // [apple, banana, cherry, Guava]
     println("fruits locked = $fruitLocked") // [apple, banana, cherry, Guava]
 
+```
 
+---
 
 
 # Map
 
+```kt
     // read only 
     val nameToGpa: Map<String, Double> = mapOf("Frank" to 3.5, 
                                                "Ben" to 4.0, 
@@ -398,7 +405,7 @@ sets are unordered, you can't access an item at a particular index
 	   println(accountBalances.keys) // [1, 2, 5, 25, 90]
 	     println(accountBalances.values)  // [A, B, E, p, V]
 
-
+```
 
 # uppercase
 	val sentence = "I am going to school"
