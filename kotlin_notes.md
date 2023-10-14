@@ -344,16 +344,68 @@ sets are unordered, you can't access an item at a particular index
 
 # Map
 
+    // read only 
+    val nameToGpa: Map<String, Double> = mapOf("Frank" to 3.5, 
+                                               "Ben" to 4.0, 
+                                               "King" to 3.7
+                                              )
+    
+    println(nameToGpa)
+    
+    // mutable 
+    val gradeToDescription: MutableMap<Char, String> = mutableMapOf('A' to "Excellent",
+                                                                   'B' to "Very Good",
+                                                                   'C' to "Good")
+    
+    print(gradeToDescription)
+
+
+    // type casting 
+    val accountBalances: MutableMap<Int, Int> = mutableMapOf(1 to 100, 2 to 100, 3 to 100)
+    val accountBalancesLocked: Map<Int, Int> = accountBalances
+
+	
+	//sampleStart
+	    val readOnlyAccountBalances = mapOf(1 to "A", 2 to "B", 3 to "C")
+	    println("${readOnlyAccountBalances[2]}")
+
+
+     # put and remove
+    val accountBalances: MutableMap<Int, String> = mutableMapOf(1 to "A", 2 to "B", 3 to "C")
+    
+    accountBalances.put(5,"E")
+    accountBalances.put(25,"p")
+    accountBalances.put(90,"V")
+    
+    println(accountBalances)  // {1=A, 2=B, 3=C, 5=E, 25=p, 90=V}
+    
+    accountBalances.remove(3)  // you remove the key
+    
+    println(accountBalances)  // {1=A, 2=B, 5=E, 25=p, 90=V}
+
+
+
+    check 
+    println(accountBalances.containsKey(90))  // true  
+
+    val readOnlyAccountBalances = mapOf(1 to 100, 2 to 100, 3 to 100)
+	println(2 in readOnlyAccountBalances.keys)
 
 
 
 
+    // obtain key , value 
+	   println(accountBalances.keys) // [1, 2, 5, 25, 90]
+	     println(accountBalances.values)  // [A, B, E, p, V]
 
 
 
+# uppercase
+	val sentence = "I am going to school"
+    println(sentence.uppercase()) //I AM GOING TO SCHOOL
 
 
-
+# Control flow
 
 
 
