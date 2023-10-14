@@ -218,41 +218,131 @@ print(monthlySalary)
 
 
 # String Templates
+    - val customers = 10
+    - println("There are $customers customers")
 
 
 
 
++=, -=, *=, /=, and %= are augmented assignment operators
+
+
+Integers  = Byte, Short, Int, Long
+Unsigned integers = UByte, UShort, UInt, ULong
+Floating-point numbers = Float, Double
+Booleans = Boolean
+Characters =  Char
+Strings =  String
+
+    val a:Int = 1000
+    val b:String = "log message"
+    val c:Double = 3.14
+    val d:Long = 100_000_000_000_000
+    val e:Boolean = false
+    val f:Char = '\n'
+
+
+
+Collections  (each collection can be mutable or read only)
+Lists  = Ordered collections of items
+Sets  = Unique unordered collections of items
+Maps  = Sets of key-value pairs where keys are unique and map to only one value
+
+
+
+# List
+read only list = use  listOf 
+mutableList = use  mutableListOf
+Kotlin can infer the type of items stored. add the type within angled brackets <>
+
+    //read only list
+    val myCourses:List<String> = listOf("E-math", "English")
+    
+    //mutable
+    val theAges:MutableList<Int> = mutableListOf(2, 55)
+
+    // from mutable to read only === assign the mutable to a list(declare a new one)  === in a way == you are doing casting 
+
+    val myCourses:List<String> = listOf("E-math", "English")
+    
+    print(myCourses[0])
+
+
+    # Extension Function
+
+    val myCourses:List<String> = listOf("E-math", "English")
+    
+    print(myCourses.first())
+    print(myCourses.last())
+
+
+    count
+    print(myCourses.count())  
+
+
+    # check 
+    print("E-math" in myCourses)   // false
+
+
+    # add or remove fromr - note:: mutable list
+
+    // mutable list 
+    val firstNames: MutableList<String> = mutableListOf()
+    
+    // add 
+    firstNames.add("Frank")
+    firstNames.add("Ben")
+    firstNames.add("Prince")
+    
+    println(firstNames.count())  // 3
+    println(firstNames) // [Frank, Ben, Prince]
+    
+    // remove 
+    firstNames.remove("Ben")  // [Frank, Prince]
+    println("Ben" in firstNames)  // false
 
 
 
 
+# Set
+sets are unordered, you can't access an item at a particular index
+
+    // read only Set 
+    val mySetOfNumbers: Set<Int> = setOf(1,4,6,7)
+    
+    // mutable 
+    val mySetOfFruits: MutableSet<String> = mutableSetOf("Banana", "Guava", "orange")
+    
+    
+    println(mySetOfNumbers.count())
+    println(mySetOfNumbers.first())
+    println(mySetOfNumbers.last())
+    println(mySetOfNumbers)
+    println("===")
+    println(mySetOfFruits)
+    println("Guava" in mySetOfFruits)
+    mySetOfFruits.add("Pineapple")
+    mySetOfFruits.remove("Guava")
+    println(mySetOfFruits)
+
+    // read only Set 
+        val mySetOfNumbers: Set<Int> = setOf(1,4,6,7,4)
+    
+    println(mySetOfNumbers)  // [1,2,6,7]  the other 4 was dropped
+
+        type casting
+
+    val fruit: MutableSet<String> = mutableSetOf("apple", "banana", "cherry", "cherry")
+	val fruitLocked: Set<String> = fruit 
+    
+    fruit.add("Guava")
+    println("fruits  = $fruit")  // [apple, banana, cherry, Guava]
+    println("fruits locked = $fruitLocked") // [apple, banana, cherry, Guava]
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# Map
 
 
 
