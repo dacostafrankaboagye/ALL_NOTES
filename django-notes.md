@@ -315,13 +315,13 @@ latest_question_list = Question.objects.order_by('-pub_date')[:5]
     dt = date.today()
 
 # Snippet
-```django
+```py
 
     admin.site.register(models.Article)
 ```
 ---
 
-```django
+```py
     urlpatterns = [ path('articles/<int:year>/', views.year_archive),]
     urlpatterns = [
         path('polls/', include('polls.urls')),
@@ -331,7 +331,7 @@ latest_question_list = Question.objects.order_by('-pub_date')[:5]
 ```
 ---
 
-```django
+```py
 
     INSTALLED_APPS = ['theAppName.apps.TheappnameConfig',]
 
@@ -339,7 +339,7 @@ latest_question_list = Question.objects.order_by('-pub_date')[:5]
 
 ---
 
-```django
+```py
 # column header
 # You can click on the column headers to sort by those values
 # note that - sorting by the output of an arbitrary method is not supported
@@ -764,7 +764,7 @@ a test database, so it will be run against the existing database
 register() – any time you need to change the admin options for a model.
 - Django displays the str() of each object
 
-```django
+```py
 class QuestionAdmin(admin.ModelAdmin):
     fields = ['pub_date', 'question_text']
 
