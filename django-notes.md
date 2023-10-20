@@ -73,6 +73,11 @@ isn’t specific to Django; it’s just good Web development practice.
 {% csrf_token %} template tag.
 - Always return an HttpResponseRedirect after successfully dealing with POST data. This prevents data from being posted twice if a user hits the Back button.
 
+- django.contrib.staticfiles is for: it collects static files from each of your applications (and any
+other places you specify) into a single location that can easily be served in production.
+
+- Django offers a tabular way of displaying inline related objects;
+
 
 # Lesson One
 
@@ -88,6 +93,9 @@ isn’t specific to Django; it’s just good Web development practice.
     > python manage.py check ==> checks for any problems in your project without making migrations/ touching the database
 
     > python manage.py createsuperuser
+
+    # where the Django source files are located on your system
+    > python -c "import django; print(django.__path__)"
 
 # Change of port
 
@@ -122,7 +130,12 @@ from django.db import models
         - HttpResponseRedirect
     
     from django.contrib import ...
-        - admin  # admin.site.register(modelName)
+        - admin  
+            # admin.site.register(modelName)
+            # class Something(admin.ModelAdmin)
+            # class Something(admin.StackedInline)
+            # class Something(admin.TabularInline)
+
 
     from django.urls import ...
         - path
@@ -302,19 +315,53 @@ latest_question_list = Question.objects.order_by('-pub_date')[:5]
     dt = date.today()
 
 # Snippet
+```django
 
     admin.site.register(models.Article)
+```
 ---
 
+```django
     urlpatterns = [ path('articles/<int:year>/', views.year_archive),]
     urlpatterns = [
         path('polls/', include('polls.urls')),
         path('admin/', admin.site.urls),
     ]
 
+```
 ---
 
+```django
+
     INSTALLED_APPS = ['theAppName.apps.TheappnameConfig',]
+
+```
+
+---
+
+```django
+# column header
+# You can click on the column headers to sort by those values
+# note that - sorting by the output of an arbitrary method is not supported
+
+
+class Question(models.Model):
+    question_text = models.CharField(max_length=200)
+    pub_date = models.DateTimeField('date published')
+
+    def __str__(self):
+        return self.question_text
+    
+    def was_published_recently(self):
+        now = timezone.now()
+        return now - datetime.timedelta(days=1) <= self.pub_date <= now
+        # return self.pub_date >= timezone.now() - datetime.timedelta(days=1)  -- old
+
+    was_published_recently.admin_order_field = 'pub_date'
+    # was_published_recently.boolean = True 
+    was_published_recently.short_description = 'Published recently?'
+
+```
 
 
 #  quick api
@@ -524,6 +571,18 @@ the 'polls:detail' make django aware the it is from the polls app, you want the 
 ```
 
 
+---
+
+# Helpful
+
+```django
+response.status_code
+reponse.context['something here']
+```
+
+
+
+
 # Others - Trival
 
 - Any Model has this exception with it.. 
@@ -666,3 +725,143 @@ a test database, so it will be run against the existing database
 
 
 ```
+
+- django.test.TestCase class provides some additional assertion methods. E.g. assertContains() and assertQuerysetEqual()
+
+- The database is reset for each test method
+- in testing redundancy is a good thing
+• a separate TestClass for each model or view
+• a separate test method for each set of conditions you want to test
+• test method names that describe their function
+
+- you can use an “in-browser” framework such as Selenium to test the way your HTML actually renders in a browser.
+- Django includes LiveServerTestCase to facilitate integration with tools like Selenium
+
+
+
+
+
+
+
+
+# Comment - static
+
+-  “static files”  = e.g. images, JavaScript, or CSS
+- create a directory called static in your app's directory
+- Django’s STATICFILES_FINDERS setting contains a list of finders that know how to discover static files from various sources
+- note e.g. 
+    - polls/static/polls/style.css
+    -  Because of how the AppDirectoriesFinder staticfile finder works, you can refer to this static file in Django simply as polls/style.css,  similar to how you reference the path for templates
+- We need to be able to point Django at the right one, and the easiest way to ensure this is by namespacing them. That is, by putting those static files inside another directory named for the application itself
+
+- The {% static %} template tag generates the absolute URL of static files
+- You should always use relative paths to link your static files between each other
+
+# Comment - admin
+
+-  tell Django the options you want when you register the object.
+- You’ll follow this pattern – create a model admin class, then pass it as the second argument to admin.site.
+register() – any time you need to change the admin options for a model.
+- Django displays the str() of each object
+
+```django
+class QuestionAdmin(admin.ModelAdmin):
+    fields = ['pub_date', 'question_text']
+
+admin.site.register(Question, QuestionAdmin)
+
+# you might want to split the form up into fieldsets:
+# The first element of each tuple in fieldsets 
+# is the title of the fieldset. 
+
+class QuestionAdmin(admin.ModelAdmin):
+    fieldsets = [
+        (None, {'fields': ['question_text']}),
+        ('Date information', {'fields': ['pub_date']})
+    ]
+
+admin.site.register(Question, QuestionAdmin)
+
+
+
+
+'''
+It’d be better if you could add a bunch of
+Choices directly when you create the Question object
+
+This tells Django: “Choice objects are edited on the Question admin page. By default, provide enough fields for 3
+choices.”
+
+
+'''
+
+class ChoiceInline(admin.StackedInline):
+    model = Choice 
+    extra = 3
+
+class QuestionAdmin(admin.ModelAdmin):
+    fieldsets = [
+        (None, {
+            'fields': ['question_text']
+            }
+        ),
+        ('Date information', {
+            'fields': ['pub_date'],
+            'classes': ['collapse']
+            }
+        )
+    ]
+    inlines = [ChoiceInline]
+
+admin.site.register(Question, QuestionAdmin)
+'''
+It works like this: There are three slots for related Choices – as specified by extra – and each time you come back to
+the “Change” page for an already-created object, you get another three extra slots
+
+'''
+
+
+class QuestionAdmin(admin.ModelAdmin):
+    # ...
+    list_display = ('question_text', 'pub_date')  # a tuple
+    inlines = [ChoiceInline]
+    list_display = ('question_text', 'pub_date','was_published_recently')
+    list_filter = ['pub_date']  # That adds a “Filter” sidebar that lets people filter the change list by the pub_date field
+
+    #  some search capability
+    search_fields = ['question_text']
+
+    '''
+        When somebody enters search terms, Django will search the
+        question_text field.
+    '''
+
+
+
+
+```
+
+- The Django admin is powered by Django itself, and its interfaces use Django’s own template system
+    - Create a templates directory in your project directory (the one that contains manage.py)
+    - add to the DIRS
+        TEMPLATES = [
+            {
+                ...
+                'DIRS': [os.path.join(BASE_DIR, 'templates')],
+                ...
+    - create a directory called admin inside templates,
+    - Now create a directory called admin inside templates, and copy the template admin/base_site.html from within the default Django admin template directory in the source code of Django itself (django/contrib/admin/templates) into that directory.
+    -  just edit the file and replace {{ site_header|default:_('Django administration') }}
+        - but note: In an actual project, you would probably use the django.contrib.admin.AdminSite.site_header attribute to more easily make this particular customization.
+
+- any of Django’s default admin templates can be overridden - To override a template, just do the same thing you did with base_site.html – copy it from the default directory into your custom directory, and make changes
+
+- since APP_DIRS is set to True, Django automatically looks for a templates/ subdirectory within each
+application package, for use as a fallback (don’t forget that django.contrib.admin is an application).
+
+- The template to customize is admin/index.html. (Do the same as with admin/base_site.html in the previous
+section – copy it from the default directory to your custom template directory). Edit the file, and you’ll see it uses a
+template variable called app_list. That variable contains every installed Django app. Instead of using that, you can
+hard-code links to object-specific admin pages in whatever way you think is best.
+
+
