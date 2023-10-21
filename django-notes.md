@@ -44,7 +44,16 @@ rather than creating directories.
     (The rest is up to you)
 
 - Django provides a test Client to simulate a user interacting with the code at the view level - use it in the test.py or shell
+
+- check out https://djangopackages.org/ 
+ - A Python package provides a way of grouping related Python code for easy reuse
+ - it must contain a special file __init__.py, even if this file is empty.
+- Python packaging refers to preparing your app in a specific format that can be easily installed and used
+
+- Django and many Django-compatible apps are distributed under the BSD license; however, you’re free to pick your own license. Just be aware that your licensing choice will affect who is able to use your code
  
+ - Only Python modules and packages are included in the package by default. To include additional files, we’ll need
+to create a MANIFEST.in file
 
 
 # About 
@@ -865,3 +874,161 @@ template variable called app_list. That variable contains every installed Django
 hard-code links to object-specific admin pages in whatever way you think is best.
 
 
+# Packaging
+- create a parent directory for the app, outside of your Django project
+- Move the app directory into the newly created directory
+- Create a file parentDIR/README.rst
+- Create a parentDIR/LICENSE file
+- create parentDIR/setup.cfg and parentDIR/setup.py files
+- To include additional files, we’ll need to create a MANIFEST.in file
+
+```py
+python setup.py sdist  # from inside the dir
+pip install --user parentDir/dist/theName-0.1.tar.gz  # an example
+pip uninstall theName  # to uninstall
+
+
+```
+---
+---
+
+
+# Models 
+- each model maps to a single database table
+- each model is a Python class that subclasses django.db.models.Model
+- each model - has attribute - which is a databse field
+
+e.g.
+```py
+from django.db import models
+
+class Musician(models.Model):
+    first_name = models.CharField(max_length=50)
+
+class Album(models.Model):
+    artist = models.ForeignKey(Musician, on_delete=models.CASCADE)
+    release_date = models.DateField()
+    num_stars = models.IntegerField()
+
+
+```
+- a set of **common** arguments available to all field types. All are optional
+ - **null**    === If True, Django will store empty values as NULL in the database. Default is False.
+ - **blank**   === If True, the field is allowed to be blank. Default is False. If a field has blank=False, the field will be required.
+ - **choices**  ===  A sequence of 2-tuples to use as choices for this field
+ - **default** === The default value for the field. This can be a value or a callable object
+ - **help_text**  ===  Extra “help” text to be displayed with the form widget. (documentation...etc)
+ - **primary_key** ===  If True, this field is the primary key for the model. # read only
+ - **unique** === If True, this field must be unique throughout the table.
+- e.g. 
+```py
+YEAR_IN_SCHOOL_CHOICES = [
+    ('FR', 'Freshman'),
+    ('SO', 'Sophomore'),
+    ('JR', 'Junior'),
+    ('SR', 'Senior'),
+    ('GR', 'Graduate'),
+]
+# Note that: first value = stored in the database, second value = what will be displayed
+
+# e.g 2
+
+class Person(models.Model):
+    SHIRT_SIZES = (
+        ('S', 'Small'),
+        ('M', 'Medium'),
+        ('L', 'Large'),
+    )
+    name = models.CharField(max_length=60)
+    shirt_size = models.CharField(max_length=1, choices=SHIRT_SIZES)
+
+# note 
+p = Person(name="Fred Flintstone", shirt_size="L")
+p.save()
+p.shirt_size  # result = 'L'
+p.get_shirt_size_display() # result = 'Large'
+
+'''
+the display value for a field with choices can be accessed using the get_FOO_display() method.
+(replace FOO with the choice name)
+'''
+
+
+# see
+'''
+If you change the value of the primary key on an existing object and then
+save it, a new object will be created alongside the old one
+'''
+class Fruit(models.Model):
+    name = models.CharField(max_length=100, primary_key=True)
+>>> fruit = Fruit.objects.create(name='Apple')
+>>> fruit.name = 'Pear'
+>>> fruit.save()
+>>> Fruit.objects.values_list('name', flat=True)  # this <<<-----
+# <QuerySet ['Apple', 'Pear']>
+
+
+
+```
+
+
+- Note: Django will automatically add an IntegerField to hold the primary key, so you don’t need to set primary_key=True on any of your fields
+unless you want to override the default primary-key behavior. If Django sees you’ve explicitly set Field.primary_key, it won’t add the automatic id column.
+
+---
+
+# Verbose Name 
+
+- Each field type, except for **ForeignKey**, **ManyToManyField** and **OneToOneField**, takes an optional first positional argument – a verbose name
+- Django will automatically create it though using the field’s attribute name, converting underscores to spaces.
+- ForeignKey, ManyToManyField and OneToOneField require the first argument to be a model class,
+- e.g 
+
+    ```py
+    first_name = models.CharField("person's first name", max_length=30)
+
+    # verbose name is "first name"
+
+
+    poll = models.ForeignKey( Poll, on_delete=models.CASCADE, verbose_name="the related poll",)
+    sites = models.ManyToManyField(Site, verbose_name="list of sites")
+    place = models.OneToOneField(Place, on_delete=models.CASCADE, verbose_name="related place",)
+
+    # The convention is not to capitalize the first letter of the verbose_name
+
+    ```
+
+
+# Relationship 
+
+- Django offers ways to define the three most common types of database relationships: many-to-one, many-to-many and one-to-one.
+
+# Many-to-one relationships
+- e.g = Manufacturer makes multiple cars but each Car only has one Manufacturer
+
+    ```py
+    from django.db import models
+    class Manufacturer(models.Model):
+        # ...
+        pass
+    class Car(models.Model):
+        manufacturer = models.ForeignKey(Manufacturer, on_delete=models.CASCADE)
+        # ...
+    ```
+
+
+# Many-to-many relationships
+- Generally, ManyToManyField instances should go in the object that’s going to be edited on a form.
+- e.g  = toppings is in Pizza
+
+    ```py
+    from django.db import models
+    class Topping(models.Model):
+        # ...
+        pass
+    class Pizza(models.Model):
+        # ...
+        toppings = models.ManyToManyField(Topping)
+
+
+    ```
