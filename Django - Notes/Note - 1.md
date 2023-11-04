@@ -178,6 +178,10 @@ from django.db import models
     from django.test.utils import ... 
         -  setup_test_environment
 
+    from django.forms.models  import ...
+        - model_to_dict
+
+
 
 
 
@@ -369,6 +373,14 @@ class Question(models.Model):
     was_published_recently.admin_order_field = 'pub_date'
     # was_published_recently.boolean = True 
     was_published_recently.short_description = 'Published recently?'
+
+```
+
+---
+
+```py
+
+ Product.objects.all().order_by("?").first()
 
 ```
 
