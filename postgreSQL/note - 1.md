@@ -1,6 +1,6 @@
 
 
-```postgreSQL
+```SQL
 
 CREATE TABLE cars(
 	brand VARCHAR(255),
