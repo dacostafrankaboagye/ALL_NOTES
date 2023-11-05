@@ -1,6 +1,6 @@
 
-
-```SQL
+```sql
+SELECT version(); 
 
 CREATE TABLE cars(
 	brand VARCHAR(255),
@@ -375,28 +375,42 @@ Note: NULL values are ignored.
 */
 
 
+-- AVG
+ 
+SELECT AVG(price)
+FROM products
+
+
+/*
+We can use the ::NUMERIC operator to round the average price to a number with 2 decimals:
+*/
+
+SELECT AVG(price)::NUMERIC(10,2)
+FROM products;
 
 
 
+-- JOIN
+
+products table:
+
+ product_id |  product_name  | category_id
+------------+----------------+-------------
+         33 | Geitost        |           4
+         34 | Sasquatch Ale  |           1
+         35 | Steeleye Stout |           1
+         36 | Inlagd Sill    |           8
 
 
 
+categories table:
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ category_id | category_name
+-------------+----------------
+           1 | Beverages
+           2 | Condiments
+           3 | Confections
+           4 | Dairy Products
 
 
 
@@ -408,6 +422,11 @@ Note: NULL values are ignored.
 
 
 ```
+
+
+
+
+
 
 
 
