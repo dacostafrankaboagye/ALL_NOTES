@@ -697,7 +697,727 @@ def select_heroes():
         for hero in results:
             print(hero)
 
+
+def select_heroes():
+    with Session(engine) as session:
+        statement = select(Hero)
+        results = session.exec(statement)
+        heroes = results.all()
+        print(heroes)
+
+
+def select_heroes():
+    with Session(engine) as session:
+        heroes = session.exec(select(Hero)).all()
+        print(heroes)
+
+```
+
+# Filter data 
+
+```py
+
+def select_heroes():
+    with Session(engine) as session:
+        statement = select(Hero).where(Hero.name == "Deadpond")
+        results = session.exec(statement)
+        for hero in results:
+            print(hero)
+
+statement = select(Hero).where(Hero.name == "Deadpond").where(Hero.age == 48)
+
+# <, >, ==, >=, <=, and != are all operators used for comparisons.
+
+
+def select_heroes():
+    with Session(engine) as session:
+        statement = select(Hero).where(Hero.name != "Deadpond")
+        results = session.exec(statement)
+        for hero in results:
+            print(hero)
+
+
+
+# multiple
+
+
+def select_heroes():
+    with Session(engine) as session:
+        statement = select(Hero).where(Hero.age >= 35).where(Hero.age < 40)
+        results = session.exec(statement)
+        for hero in results:
+            print(hero)
+
+def select_heroes():
+    with Session(engine) as session:
+        statement = select(Hero).where(Hero.age >= 35, Hero.age < 40)
+        results = session.exec(statement)
+        for hero in results:
+            print(hero)
+
+
+# or
+
+
+def select_heroes():
+    with Session(engine) as session:
+        statement = select(Hero).where(or_(Hero.age <= 35, Hero.age > 90))
+        results = session.exec(statement)
+        for hero in results:
+            print(hero)
+
+
+
+# sometimes error so do this,
+
+def select_heroes():
+    with Session(engine) as session:
+        statement = select(Hero).where(col(Hero.age) >= 35)
+        results = session.exec(statement)
+        for hero in results:
+            print(hero)
+
+```
+
+--- 
+
+```py
+
+
+# look
+
+def create_db_and_tables():
+    SQLModel.metadata.create_all(engine)
+
+
+def create_heroes():
+    hero_1 = Hero(name="Deadpond", secret_name="Dive Wilson")
+    hero_2 = Hero(name="Spider-Boy", secret_name="Pedro Parqueador")
+    hero_3 = Hero(name="Rusty-Man", secret_name="Tommy Sharp", age=48)
+    hero_4 = Hero(name="Tarantula", secret_name="Natalia Roman-on", age=32)
+    hero_5 = Hero(name="Black Lion", secret_name="Trevor Challa", age=35)
+    hero_6 = Hero(name="Dr. Weird", secret_name="Steve Weird", age=36)
+    hero_7 = Hero(name="Captain North America", secret_name="Esteban Rogelios", age=93)
+
+    with Session(engine) as session:
+        session.add(hero_1)
+        session.add(hero_2)
+        session.add(hero_3)
+        session.add(hero_4)
+        session.add(hero_5)
+        session.add(hero_6)
+        session.add(hero_7)
+
+        session.commit()
+
+
+def select_heroes():
+    with Session(engine) as session:
+        statement = select(Hero).where(Hero.age > 35)
+        results = session.exec(statement)
+        for hero in results:
+            print(hero)
+
+
+def main():
+    create_db_and_tables()
+    create_heroes()
+    select_heroes()
+
+
+
+
+
+
+```
+
+
+
+# index -very useful
+
+```py
+
+from typing import Optional
+
+from sqlmodel import Field, Session, SQLModel, create_engine, select
+
+
+class Hero(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    name: str = Field(index=True)
+    secret_name: str
+    age: Optional[int] = Field(default=None, index=True)
+
+
+def select_heroes():
+    with Session(engine) as session:
+        statement = select(Hero).where(Hero.name == "Deadpond")
+        results = session.exec(statement)
+        for hero in results:
+            print(hero)
+
+
+```
+
+# relationship 
+
+```py
+
+from typing import Optional
+
+from sqlmodel import Field, Session, SQLModel, create_engine
+
+
+class Team(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    name: str = Field(index=True)
+    headquarters: str
+
+
+class Hero(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    name: str = Field(index=True)
+    secret_name: str
+    age: Optional[int] = Field(default=None, index=True)
+
+    team_id: Optional[int] = Field(default=None, foreign_key="team.id")
+
+
+```
+
+
+# relationship 
+
+```py
+
+from typing import List, Optional
+
+from sqlmodel import Field, Relationship, Session, SQLModel, create_engine
+
+
+class Team(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    name: str = Field(index=True)
+    headquarters: str
+
+    heroes: List["Hero"] = Relationship(back_populates="team")
+
+
+class Hero(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    name: str = Field(index=True)
+    secret_name: str
+    age: Optional[int] = Field(default=None, index=True)
+
+    team_id: Optional[int] = Field(default=None, foreign_key="team.id")
+    team: Optional[Team] = Relationship(back_populates="heroes")
+
+
+sqlite_file_name = "database.db"
+sqlite_url = f"sqlite:///{sqlite_file_name}"
+
+engine = create_engine(sqlite_url, echo=True)
+
+
+def create_db_and_tables():
+    SQLModel.metadata.create_all(engine)
+
+
+def create_heroes():
+    with Session(engine) as session:
+        team_preventers = Team(name="Preventers", headquarters="Sharp Tower")
+        team_z_force = Team(name="Z-Force", headquarters="Sister Margaret’s Bar")
+
+        hero_deadpond = Hero(
+            name="Deadpond", secret_name="Dive Wilson", team=team_z_force
+        )
+        hero_rusty_man = Hero(
+            name="Rusty-Man", secret_name="Tommy Sharp", age=48, team=team_preventers
+        )
+        hero_spider_boy = Hero(name="Spider-Boy", secret_name="Pedro Parqueador")
+        session.add(hero_deadpond)
+        session.add(hero_rusty_man)
+        session.add(hero_spider_boy)
+        session.commit()
+
+        session.refresh(hero_deadpond)
+        session.refresh(hero_rusty_man)
+        session.refresh(hero_spider_boy)
+
+        print("Created hero:", hero_deadpond)
+        print("Created hero:", hero_rusty_man)
+        print("Created hero:", hero_spider_boy)
+
+        hero_spider_boy.team = team_preventers
+        session.add(hero_spider_boy)
+        session.commit()
+
+
+def main():
+    create_db_and_tables()
+    create_heroes()
+
+
+if __name__ == "__main__":
+    main()
+
+
+# take note
+
+'''
+
+if hero.team:
+    print(hero.team.name)
+
+'''
+
+```
+
+
+---
+
+
+# relatonship - instace e.g.
+```py
+from typing import Optional
+
+from sqlmodel import Field, Session, SQLModel, create_engine
+
+
+class Team(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    name: str = Field(index=True)
+    headquarters: str
+
+
+class Hero(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    name: str = Field(index=True)
+    secret_name: str
+    age: Optional[int] = Field(default=None, index=True)
+
+    team_id: Optional[int] = Field(default=None, foreign_key="team.id")
+
+
+sqlite_file_name = "database.db"
+sqlite_url = f"sqlite:///{sqlite_file_name}"
+
+engine = create_engine(sqlite_url, echo=True)
+
+
+def create_db_and_tables():
+    SQLModel.metadata.create_all(engine)
+
+
+def create_heroes():
+    with Session(engine) as session:
+        team_preventers = Team(name="Preventers", headquarters="Sharp Tower")
+        team_z_force = Team(name="Z-Force", headquarters="Sister Margaret’s Bar")
+        session.add(team_preventers)
+        session.add(team_z_force)
+        session.commit()
+
+        hero_deadpond = Hero(
+            name="Deadpond", secret_name="Dive Wilson", team_id=team_z_force.id
+        )
+        hero_rusty_man = Hero(
+            name="Rusty-Man",
+            secret_name="Tommy Sharp",
+            age=48,
+            team_id=team_preventers.id,
+        )
+        hero_spider_boy = Hero(name="Spider-Boy", secret_name="Pedro Parqueador")
+        session.add(hero_deadpond)
+        session.add(hero_rusty_man)
+        session.add(hero_spider_boy)
+        session.commit()
+
+        session.refresh(hero_deadpond)
+        session.refresh(hero_rusty_man)
+        session.refresh(hero_spider_boy)
+
+        print("Created hero:", hero_deadpond)
+        print("Created hero:", hero_rusty_man)
+        print("Created hero:", hero_spider_boy)
+
+
+def main():
+    create_db_and_tables()
+    create_heroes()
+
+
+if __name__ == "__main__":
+    main()
+```
+
+---
+
+
+# relationship -assign 
+```py
+def create_heroes():
+    with Session(engine) as session:
+
+ 
+
+        hero_spider_boy.team = team_preventers
+        session.add(hero_spider_boy)
+        session.commit()
+        session.refresh(hero_spider_boy)
+        print("Updated hero:", hero_spider_boy)
+```
+
+```py
+
+# create
+
+def create_heroes():
+    with Session(engine) as session:
+
+
+        hero_black_lion = Hero(name="Black Lion", secret_name="Trevor Challa", age=35)
+        hero_sure_e = Hero(name="Princess Sure-E", secret_name="Sure-E")
+        team_wakaland = Team(
+            name="Wakaland",
+            headquarters="Wakaland Capital City",
+            heroes=[hero_black_lion, hero_sure_e],
+        )
+        session.add(team_wakaland)
+        session.commit()
+        session.refresh(team_wakaland)
+        print("Team Wakaland:", team_wakaland)
+
+
 ```
 
 # Note 
 - we should have a single engine for the whole application, but different sessions for each group of operations.
+
+- SQLAchemy also has it's own select, and SQLModel's select uses SQLAlchemy's select internally.
+
+- SQLAlchemy's own Session has a method session.execute(). It doesn't have a session.exec() method
+
+- - SQLModel's own Session inherits directly from SQLAlchemy's Session, and adds this additional method session.exec(). Underneath, it uses the same session.execute().
+
+
+ # File Structure 
+
+   - Models File
+     
+```py
+
+from typing import List, Optional
+
+from sqlmodel import Field, Relationship, SQLModel
+
+
+class Team(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    name: str = Field(index=True)
+    headquarters: str
+
+    heroes: List["Hero"] = Relationship(back_populates="team")
+
+
+class Hero(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    name: str = Field(index=True)
+    secret_name: str
+    age: Optional[int] = Field(default=None, index=True)
+
+    team_id: Optional[int] = Field(default=None, foreign_key="team.id")
+    team: Optional[Team] = Relationship(back_populates="heroes")
+
+```
+
+  - Database file
+```py
+from sqlmodel import SQLModel, create_engine
+
+sqlite_file_name = "database.db"
+sqlite_url = f"sqlite:///{sqlite_file_name}"
+
+engine = create_engine(sqlite_url)
+
+
+def create_db_and_tables():
+    SQLModel.metadata.create_all(engine)
+
+```
+
+  - app file
+
+```py
+from sqlmodel import Session
+
+from .database import create_db_and_tables, engine
+from .models import Hero, Team
+
+
+def create_heroes():
+    with Session(engine) as session:
+        team_z_force = Team(name="Z-Force", headquarters="Sister Margaret’s Bar")
+
+        hero_deadpond = Hero(
+            name="Deadpond", secret_name="Dive Wilson", team=team_z_force
+        )
+        session.add(hero_deadpond)
+        session.commit()
+
+        session.refresh(hero_deadpond)
+
+        print("Created hero:", hero_deadpond)
+        print("Hero's team:", hero_deadpond.team)
+
+
+def main():
+    create_db_and_tables()
+    create_heroes()
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+
+
+# Fast API with it
+
+```py
+
+from typing import Optional
+
+from fastapi import FastAPI
+from sqlmodel import Field, Session, SQLModel, create_engine, select
+
+
+class Hero(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    name: str = Field(index=True)
+    secret_name: str
+    age: Optional[int] = Field(default=None, index=True)
+
+
+sqlite_file_name = "database.db"
+sqlite_url = f"sqlite:///{sqlite_file_name}"
+
+connect_args = {"check_same_thread": False}
+engine = create_engine(sqlite_url, echo=True, connect_args=connect_args)
+
+
+def create_db_and_tables():
+    SQLModel.metadata.create_all(engine)
+
+
+app = FastAPI()
+
+
+@app.on_event("startup")
+def on_startup():
+    create_db_and_tables()
+
+
+@app.post("/heroes/")
+def create_hero(hero: Hero):
+    with Session(engine) as session:
+        session.add(hero)
+        session.commit()
+        session.refresh(hero)
+        return hero
+
+
+@app.get("/heroes/")
+def read_heroes():
+    with Session(engine) as session:
+        heroes = session.exec(select(Hero)).all()
+        return heroes
+
+```
+
+# FastAPI Response Model with SQLModel
+
+- response model 
+```py
+
+from typing import List, Optional
+
+from fastapi import FastAPI
+from sqlmodel import Field, Session, SQLModel, create_engine, select
+
+
+class Hero(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    name: str = Field(index=True)
+    secret_name: str
+    age: Optional[int] = Field(default=None, index=True)
+
+
+sqlite_file_name = "database.db"
+sqlite_url = f"sqlite:///{sqlite_file_name}"
+
+connect_args = {"check_same_thread": False}
+engine = create_engine(sqlite_url, echo=True, connect_args=connect_args)
+
+
+def create_db_and_tables():
+    SQLModel.metadata.create_all(engine)
+
+
+app = FastAPI()
+
+
+@app.on_event("startup")
+def on_startup():
+    create_db_and_tables()
+
+
+@app.post("/heroes/", response_model=Hero)
+def create_hero(hero: Hero):
+    with Session(engine) as session:
+        session.add(hero)
+        session.commit()
+        session.refresh(hero)
+        return hero
+
+
+@app.get("/heroes/", response_model=List[Hero])
+def read_heroes():
+    with Session(engine) as session:
+        heroes = session.exec(select(Hero)).all()
+        return heroes
+
+```
+
+
+# Multiple Models with Duplicated Fields
+
+```py
+
+from typing import List, Optional
+
+from fastapi import FastAPI
+from sqlmodel import Field, Session, SQLModel, create_engine, select
+
+
+class Hero(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    name: str = Field(index=True)
+    secret_name: str
+    age: Optional[int] = Field(default=None, index=True)
+
+
+class HeroCreate(SQLModel):
+    name: str
+    secret_name: str
+    age: Optional[int] = None
+
+
+class HeroRead(SQLModel):
+    id: int
+    name: str
+    secret_name: str
+    age: Optional[int] = None
+
+
+sqlite_file_name = "database.db"
+sqlite_url = f"sqlite:///{sqlite_file_name}"
+
+connect_args = {"check_same_thread": False}
+engine = create_engine(sqlite_url, echo=True, connect_args=connect_args)
+
+
+def create_db_and_tables():
+    SQLModel.metadata.create_all(engine)
+
+
+app = FastAPI()
+
+
+@app.on_event("startup")
+def on_startup():
+    create_db_and_tables()
+
+
+@app.post("/heroes/", response_model=HeroRead)
+def create_hero(hero: HeroCreate):
+    with Session(engine) as session:
+        db_hero = Hero.from_orm(hero)
+        session.add(db_hero)
+        session.commit()
+        session.refresh(db_hero)
+        return db_hero
+
+
+@app.get("/heroes/", response_model=List[HeroRead])
+def read_heroes():
+    with Session(engine) as session:
+        heroes = session.exec(select(Hero)).all()
+        return heroes
+
+
+```
+
+# avoid dupliacation - muti - fields
+
+```py
+
+from typing import List, Optional
+
+from fastapi import FastAPI
+from sqlmodel import Field, Session, SQLModel, create_engine, select
+
+
+class HeroBase(SQLModel):
+    name: str = Field(index=True)
+    secret_name: str
+    age: Optional[int] = Field(default=None, index=True)
+
+
+class Hero(HeroBase, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+
+
+class HeroCreate(HeroBase):
+    pass
+
+
+class HeroRead(HeroBase):
+    id: int
+
+
+sqlite_file_name = "database.db"
+sqlite_url = f"sqlite:///{sqlite_file_name}"
+
+connect_args = {"check_same_thread": False}
+engine = create_engine(sqlite_url, echo=True, connect_args=connect_args)
+
+
+def create_db_and_tables():
+    SQLModel.metadata.create_all(engine)
+
+
+app = FastAPI()
+
+
+@app.on_event("startup")
+def on_startup():
+    create_db_and_tables()
+
+
+@app.post("/heroes/", response_model=HeroRead)
+def create_hero(hero: HeroCreate):
+    with Session(engine) as session:
+        db_hero = Hero.from_orm(hero)
+        session.add(db_hero)
+        session.commit()
+        session.refresh(db_hero)
+        return db_hero
+
+
+@app.get("/heroes/", response_model=List[HeroRead])
+def read_heroes():
+    with Session(engine) as session:
+        heroes = session.exec(select(Hero)).all()
+        return heroes
+```
