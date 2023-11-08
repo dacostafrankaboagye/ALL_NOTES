@@ -290,6 +290,8 @@ async def UpdateStudent(studentID: int, theStudent: UpdateStudent):
 
 # SQL model
 
+- SQLModel is a tool to help you with SQL Databases.
+
 - Blog ::  https://bugbytes.io/posts/setting-up-sqlmodel/
 
 - - pip install sqlmodel
@@ -297,6 +299,91 @@ async def UpdateStudent(studentID: int, theStudent: UpdateStudent):
 -- sql lite explorer - extension
 
 ```py
+
+# database.db
+
+from typing import Optional
+
+from sqlmodel import Field, SQLModel
+
+
+from sqlmodel import Field, SQLModel, create_engine
+
+# There should be one engine for the entire application
+DB_FILE = 'db.sqlite3'
+engine = create_engine(f"sqlite:///{DB_FILE}", echo=True)
+
+
+
+class Hero(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    name: str
+    secret_name: str
+    age: Optional[int] = None
+
+
+def create_tables():
+    """Create the tables registered with SQLModel.metadata (i.e classes with table=True).
+    More info: https://sqlmodel.tiangolo.com/tutorial/create-db-and-table/#sqlmodel-metadata
+    """
+    SQLModel.metadata.create_all(engine)
+
+if __name__ == '__main__':
+    # creates the table if this file is run independently, as a script
+    create_tables()
+
+
+```
+---
+
+```py
+
+# main app
+
+#sample
+
+
+from typing import Optional
+
+from sqlmodel import Field, Session, SQLModel, create_engine
+
+
+class Hero(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    name: str
+    secret_name: str
+    age: Optional[int] = None
+
+
+hero_1 = Hero(name="Deadpond", secret_name="Dive Wilson")
+hero_2 = Hero(name="Spider-Boy", secret_name="Pedro Parqueador")
+hero_3 = Hero(name="Rusty-Man", secret_name="Tommy Sharp", age=48)
+
+
+engine = create_engine("sqlite:///database.db")
+
+
+SQLModel.metadata.create_all(engine)
+
+with Session(engine) as session:
+    session.add(hero_1)
+    session.add(hero_2)
+    session.add(hero_3)
+    session.commit()
+
+
+
+# selecting
+
+
+
+engine = create_engine("sqlite:///database.db")
+
+with Session(engine) as session:
+    statement = select(Hero).where(Hero.name == "Spider-Boy")
+    hero = session.exec(statement).first()
+    print(hero)
+
 
 
 ```
