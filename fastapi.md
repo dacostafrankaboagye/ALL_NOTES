@@ -456,3 +456,199 @@ sqlite:///databases/local/application.db
 sqlite:///db.sqlite
 
 ```
+
+
+ But in production, you would probably want to remove echo=True
+
+---
+
+if you import the models before calling SQLModel.metadata.create_all(), it will work:
+
+```py
+from sqlmodel import SQLModel
+
+from . import models
+from .db import engine
+
+SQLModel.metadata.create_all(engine)
+
+
+```
+
+# you can do this
+
+```py
+
+# db.py
+from sqlmodel import SQLModel, create_engine
+from . import models
+
+
+sqlite_file_name = "database.db"
+sqlite_url = f"sqlite:///{sqlite_file_name}"
+
+engine = create_engine(sqlite_url
+
+
+# app.py
+from .db import engine, SQLModel
+
+SQLModel.metadata.create_all(engine)
+
+
+```
+
+
+# example - another
+
+```py
+
+from typing import Optional
+
+from sqlmodel import Field, SQLModel, create_engine
+
+
+class Hero(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    name: str
+    secret_name: str
+    age: Optional[int] = None
+
+
+sqlite_file_name = "database.db"
+sqlite_url = f"sqlite:///{sqlite_file_name}"
+
+engine = create_engine(sqlite_url, echo=True)
+
+
+def create_db_and_tables():
+    SQLModel.metadata.create_all(engine)
+
+
+if __name__ == "__main__":
+    create_db_and_tables()
+
+```
+
+
+# inserting
+
+```py
+
+from typing import Optional
+
+from sqlmodel import Field, Session, SQLModel, create_engine
+
+
+class Hero(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    name: str
+    secret_name: str
+    age: Optional[int] = None
+
+
+sqlite_file_name = "database.db"
+sqlite_url = f"sqlite:///{sqlite_file_name}"
+
+engine = create_engine(sqlite_url, echo=True)
+
+
+def create_db_and_tables():
+    SQLModel.metadata.create_all(engine)
+
+
+def create_heroes():
+    hero_1 = Hero(name="Deadpond", secret_name="Dive Wilson")
+    hero_2 = Hero(name="Spider-Boy", secret_name="Pedro Parqueador")
+    hero_3 = Hero(name="Rusty-Man", secret_name="Tommy Sharp", age=48)
+
+    with Session(engine) as session:
+        session.add(hero_1)
+        session.add(hero_2)
+        session.add(hero_3)
+
+        session.commit()
+
+
+def main():
+    create_db_and_tables()
+    create_heroes()
+
+
+if __name__ == "__main__":
+    main()
+
+
+```
+
+
+---
+
+
+In contrast to the engine that is one for the whole application, we create a new session for each group of operations with the database that belong together.
+
+
+- the session needs and uses an engine.
+
+- -  if we have a web application, we would normally have a single session per request
+  -  - But for each request, we would create and use a new session
+   
+---
+
+# session
+
+```py
+
+
+from typing import Optional
+
+from sqlmodel import Field, Session, SQLModel, create_engine
+
+
+class Hero(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    name: str
+    secret_name: str
+    age: Optional[int] = None
+
+
+sqlite_file_name = "database.db"
+sqlite_url = f"sqlite:///{sqlite_file_name}"
+
+engine = create_engine(sqlite_url, echo=True)
+
+
+def create_db_and_tables():
+    SQLModel.metadata.create_all(engine)
+
+
+def create_heroes():
+    hero_1 = Hero(name="Deadpond", secret_name="Dive Wilson")
+    hero_2 = Hero(name="Spider-Boy", secret_name="Pedro Parqueador")
+    hero_3 = Hero(name="Rusty-Man", secret_name="Tommy Sharp", age=48)
+
+    session = Session(engine)
+
+    session.add(hero_1)
+    session.add(hero_2)
+    session.add(hero_3)
+
+    session.commit()
+
+    session.close()
+
+
+def main():
+    create_db_and_tables()
+    create_heroes()
+
+
+if __name__ == "__main__":
+    main()
+
+
+```
+
+---
+
+
