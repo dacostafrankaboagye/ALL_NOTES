@@ -651,4 +651,53 @@ if __name__ == "__main__":
 
 ---
 
+ So once we are done with the session, we should close it to make it release those resources and finish its cleanup
+ ```py
+session.close()
+```
 
+# session - with - block 
+
+This is the same as creating the session manually and then manually closing it. But here, using a with block, it will be automatically created when starting the with block and assigned to the variable session, and it will be automatically closed after the with block is finished.
+
+```py
+
+    with Session(engine) as session:
+        session.add(hero_1)
+        session.add(hero_2)
+        session.add(hero_3)
+
+        session.commit()
+
+```
+
+
+# refresh 
+
+-- Refresh Objects Explicitly
+
+-- session refreshes the data automatically behind the scenes, as a side effect, when you access an attribute
+- what if you want to explicitly refresh the data?
+
+You can do that too with session.refresh(object)
+
+-  marks it as "fresh" or "not expired".
+
+# READ data
+
+
+```py
+
+from sqlmodel import Field, Session, SQLModel, create_engine, select
+
+def select_heroes():
+    with Session(engine) as session:
+        statement = select(Hero)
+        results = session.exec(statement)
+        for hero in results:
+            print(hero)
+
+```
+
+# Note 
+- we should have a single engine for the whole application, but different sessions for each group of operations.
