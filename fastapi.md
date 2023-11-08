@@ -289,3 +289,14 @@ async def UpdateStudent(studentID: int, theStudent: UpdateStudent):
 
 
 # SQL model
+
+- Blog ::  https://bugbytes.io/posts/setting-up-sqlmodel/
+
+- - pip install sqlmodel
+
+-- sql lite explorer - extension
+
+```py
+
+
+```
