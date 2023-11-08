@@ -298,6 +298,10 @@ async def UpdateStudent(studentID: int, theStudent: UpdateStudent):
 
 -- sql lite explorer - extension
 
+- With SQLModel, instead of writing SQL statements directly, you use Python classes and objects to interact with the database.
+
+- - https://sqlmodel.tiangolo.com/tutorial/create-db-and-table/
+
 ```py
 
 # database.db
@@ -312,7 +316,11 @@ from sqlmodel import Field, SQLModel, create_engine
 # There should be one engine for the entire application
 DB_FILE = 'db.sqlite3'
 engine = create_engine(f"sqlite:///{DB_FILE}", echo=True)
+'''
+ echo=True.
 
+It will make the engine print all the SQL statements it execute
+'''
 
 
 class Hero(SQLModel, table=True):
@@ -385,5 +393,66 @@ with Session(engine) as session:
     print(hero)
 
 
+
+```
+
+---
+
+
+# samples
+
+```py
+
+user_id = input("Type the user ID: ")
+
+session.exec(
+    select(Hero).where(Hero.id == user_id)
+).all()
+
+
+
+database.execute(
+    select(Hero).where(Hero.secret_name == "Dive Wilson")
+).all()
+
+
+
+```
+
+
+
+# sqlite
+- https://sqlitebrowser.org/
+
+- Each supported database has it's own URL type. For example, for SQLite it is sqlite:/// followed by the file path. For example:
+
+sqlite:///database.db
+sqlite:///databases/local/application.db
+sqlite:///db.sqlite
+
+
+- note :: https://docs.sqlalchemy.org/en/14/core/engines.html
+
+```py
+
+# default
+engine = create_engine("postgresql://scott:tiger@localhost/mydatabase")
+
+# psycopg2
+engine = create_engine("postgresql+psycopg2://scott:tiger@localhost/mydatabase")
+
+# pg8000
+engine = create_engine("postgresql+pg8000://scott:tiger@localhost/mydatabase")
+
+```
+
+
+```py
+
+Each supported database has it's own URL type. For example, for SQLite it is sqlite:/// followed by the file path. For example:
+
+sqlite:///database.db
+sqlite:///databases/local/application.db
+sqlite:///db.sqlite
 
 ```
