@@ -80,3 +80,82 @@
  # lt 
 
 ```
+
+
+
+---
+
+```py
+
+
+from typing import Optional
+from fastapi import FastAPI
+
+app = FastAPI() 
+
+
+# query paramater
+
+@app.get("/users/")
+async def theFunc(theName: Optional[str] = None):
+    if theName:
+        
+        return {
+            "name" : theName
+        }
+
+    else:
+        return {
+            "name" : "no data"
+        }
+
+```
+
+
+---
+
+
+# optional argument - required argument 
+
+```py
+'''
+python does not allow optional argumen before required argument
+you can by pass that with  *
+'''
+
+
+
+from typing import Optional
+from fastapi import FastAPI
+
+app = FastAPI() 
+
+
+# query paramater
+
+@app.get("/users/")
+async def theFunc(*, theName: Optional[str] = None, theSchool: str):
+    if theName and theSchool:
+        
+        return {
+            "name" : theName,
+            "theSchol": theSchool,
+        }
+    elif theName:
+        return {
+            "name" : theName,
+        }
+    
+
+    else:
+        return {
+            "name" : "no data"
+        }
+        
+
+```
+
+
+# request body
+
+
