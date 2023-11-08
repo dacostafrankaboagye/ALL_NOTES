@@ -211,3 +211,78 @@ async def createUser(studentID: int, theStudent: Student):
 
 
 ```
+
+
+# updating  - put
+      -  make the the fiels optional so that user can update some of them 
+
+```py
+
+
+from typing import Optional
+from fastapi import FastAPI
+from pydantic import BaseModel
+
+app = FastAPI() 
+
+
+
+# request body
+
+
+class Student(BaseModel):
+    name :str 
+    school: str 
+    year : int 
+
+class UpdateStudent(BaseModel):
+    name :Optional[str] 
+    school: Optional[str] 
+    year : Optional[int]
+
+
+allStudents = {
+    1: {
+        "name" : "Frank",
+        "school" : "GH",
+        "year" : 2009,
+    },
+    2: {
+        "name" : "kwabrna",
+        "school" : "Ho",
+        "year" : 2901,
+    }
+
+}
+
+@app.get("/")
+async def working():
+    return {
+        "message" : "working"
+    }
+
+@app.get("/getStudents/")
+async def getStudents():
+    return allStudents
+
+@app.post("/createUser/{studentID}/")
+async def createUser(studentID: int, theStudent: Student):
+    if studentID in allStudents:
+        return {
+            "messsage" : "student already exist",
+        }
+    allStudents[studentID] = theStudent
+    return allStudents
+
+
+@app.put("/updateStudent/{studentID}/")
+async def UpdateStudent(studentID: int, theStudent: UpdateStudent):
+    if studentID not in allStudents:
+        return {
+            "message" : "Student Not found"
+        }
+    allStudents[studentID] = theStudent 
+    return allStudents
+
+
+```
