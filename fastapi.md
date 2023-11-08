@@ -1500,6 +1500,7 @@ def read_hero(hero_id: int):
 
 # update - e.g.
 
+- partially update data
 ```py
 
 from typing import List, Optional
@@ -1590,6 +1591,6 @@ def update_hero(hero_id: int, hero: HeroUpdate):
         session.commit()
         session.refresh(db_hero)
         return db_hero
-T
+
 
 ```
