@@ -286,3 +286,6 @@ async def UpdateStudent(studentID: int, theStudent: UpdateStudent):
 
 
 ```
+
+
+# SQL model
