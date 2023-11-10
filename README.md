@@ -4,7 +4,6 @@
 <p align="center">
   <a href="#Introduction">Introduction</a> •
   <a href="#key-features">Key Features</a> •
-  <a href="#how-to-use">How To Use</a> •
   <a href="#Install">Install</a> •
   <a href="#credits">Credits</a> •
   <a href="#related">Related</a> •
@@ -19,47 +18,33 @@
 * Earn Points while you learn
 
 
-## How To Use
+## Install
 
-To clone and run this application, you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
+To clone and run this application, you'll need [Python3.10.5]([https://git-scm.com](https://www.python.org/downloads/release/python-3105/)) and [Fast API]([https://nodejs.org/en/download/](https://fastapi.tiangolo.com/))) installed on your computer. From your command line:
 
 ```bash
 # Clone this repository
-$ git clone https://github.com/amitmerchant1990/electron-markdownify
+$ git clone https://github.com/stevedzakpasu/Hackathon-UniStudyHub.git
 
 # Go into the repository
-$ cd electron-markdownify
+$ cd Hackathon-UniStudyHub
 
-# Install dependencies
-$ npm install
+# Install Requirements
+$ pip install -r requirements.txt
 
-# Run the app
-$ npm start
+# Run 
+$ uvicorn main:app --reload
 ```
 
-> **Note**
-> If you're using Linux Bash for Windows, [see this guide](https://www.howtogeek.com/261575/how-to-run-graphical-linux-desktop-applications-from-windows-10s-bash-shell/) or use `node` from the command prompt.
-
-
-## Download
-
-You can [download](https://github.com/amitmerchant1990/electron-markdownify/releases/tag/v1.2.0) the latest installable version of Markdownify for Windows, macOS and Linux.
-
-## Emailware
-
-Markdownify is an [emailware](https://en.wiktionary.org/wiki/emailware). Meaning, if you liked using this app or it has helped you in any way, I'd like you send me an email at <bullredeyes@gmail.com> about anything you'd want to say about this software. I'd really appreciate it!
 
 ## Credits
 
 This software uses the following open source packages:
 
-- [Electron](http://electron.atom.io/)
-- [Node.js](https://nodejs.org/)
-- [Marked - a markdown parser](https://github.com/chjj/marked)
-- [showdown](http://showdownjs.github.io/showdown/)
-- [CodeMirror](http://codemirror.net/)
-- Emojis are taken from [here](https://github.com/arvida/emoji-cheat-sheet.com)
-- [highlight.js](https://highlightjs.org/)
+- [Uvicorn]([http://electron.atom.io/](https://www.uvicorn.org/))
+- [SQLModel](https://sqlmodel.tiangolo.com/)
+- [Alembic](https://alembic.sqlalchemy.org/en/latest/)
+
 
 ## Related
 
@@ -75,18 +60,4 @@ This software uses the following open source packages:
 	<img src="https://c5.patreon.com/external/logo/become_a_patron_button@2x.png" width="160">
 </a>
 
-## You may also like...
-
-- [Pomolectron](https://github.com/amitmerchant1990/pomolectron) - A pomodoro app
-- [Correo](https://github.com/amitmerchant1990/correo) - A menubar/taskbar Gmail App for Windows and macOS
-
-## License
-
-MIT
-
----
-
-> [amitmerchant.com](https://www.amitmerchant.com) &nbsp;&middot;&nbsp;
-> GitHub [@amitmerchant1990](https://github.com/amitmerchant1990) &nbsp;&middot;&nbsp;
-> Twitter [@amit_merchant](https://twitter.com/amit_merchant)
 
