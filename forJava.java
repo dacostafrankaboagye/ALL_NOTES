@@ -1356,3 +1356,44 @@ public class Tryout{
 
 
 
+
+/*
+
+
+Final Key Word
+
+
+ */
+
+final class TestThis{
+    public void show(){
+        System.out.println("in the test section");
+    }
+}
+
+// cannot extend because the class has the final key word
+class AnotherClass extends TestThis{
+
+}
+
+
+
+// cannot override final method
+class TestThis{
+    public final void show(){
+        System.out.println("in the test section");
+    }
+}
+
+
+class AnotherClass extends TestThis{
+    // this will not work
+    public void show(){
+        System.out.println("in another class");
+    }
+
+}
+
+
+ 
+
