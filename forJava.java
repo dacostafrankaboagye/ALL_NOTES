@@ -1395,5 +1395,7 @@ class AnotherClass extends TestThis{
 }
 
 
- 
+ // cannot reassign final variable
+
+final double myPI = 3.149;
 
