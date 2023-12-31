@@ -95,7 +95,13 @@ fun GreetingPreview() {
     }
 }
 ```
+---
 
+- The three basic, standard layout elements in Compose are
+   - Column
+   - Row
+   - Box composables
+ - these composables can act as parent UI elements.
 
 
 
