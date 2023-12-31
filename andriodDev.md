@@ -30,10 +30,71 @@ fun BirthdayCardPreview() {
 ---
 
 - UI elements in Android apps use two different units of measurement:
+   -  density-independent pixels (DP)
+   -  scalable pixels (SP).
+- By default, the SP unit is the same size as the DP unit, but SP resizes based on the user's preferred text size under phone setting
 
 
+```kt
+package com.example.happybirthday
 
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.sp
+import com.example.happybirthday.ui.theme.HappyBirthdayTheme
 
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            HappyBirthdayTheme {
+                // A surface container using the 'background' color from the theme
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+
+                }
+            }
+        }
+    }
+}
+
+//@Composable
+//fun Greeting(name: String, modifier: Modifier = Modifier) {
+//    Text(
+//        text = "Hello $name!",
+//        modifier = modifier
+//    )
+//}
+
+@Composable
+fun GreetingText(modifier: Modifier = Modifier, message: String) {
+    Text(text = message, fontSize = 100.sp, lineHeight = 100.sp)
+
+}
+
+@Preview(
+    showBackground = true,
+    name = "myApp",
+    showSystemUi = false
+)
+@Composable
+fun GreetingPreview() {
+    HappyBirthdayTheme {
+        GreetingText(message = "Happy New Year")
+
+    }
+}
+```
 
 
 
