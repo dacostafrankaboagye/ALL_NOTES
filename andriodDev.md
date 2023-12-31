@@ -433,7 +433,18 @@ Text(
 - different vertical arrangements:equal weight, space between, space around, space evenly, top, center and bottom
 - different horizontal arrangements: equal weight, space between, space around, space evenly, end, center and start
 
+### Padding
+```kt
 
+// This is an example. 
+Modifier.padding(
+    start = 16.dp,
+    top = 16.dp,
+    end = 16.dp,
+    bottom = 16.dp
+)
+
+```
 
 
 
