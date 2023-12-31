@@ -251,11 +251,16 @@ MyProject/
             strings.xml
 
 ```
+
+Note
+
  drawable/ directory for an image resource
  mipmap/ directory for launcher icons
  values/ directory for string resources.
-
+ 
  Resources can be accessed with resource IDs that are generated in your project's R class.
+ 
+ An R class is an automatically generated class by Android that contains the IDs of all resources in the projec
 
 
 
