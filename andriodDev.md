@@ -413,3 +413,32 @@ Image(
 
 
 ```
+
+### Layout Modifiers
+- Modifiers are used to decorate or add behavior to Jetpack Compose UI elements.
+- To set them, a composable or a layout needs to accept a modifier as a parameter
+```kt
+//Example
+Text(
+    text = "Hello, World!",
+    // Solid element background color
+    modifier = Modifier.background(color = Color.Green) 
+)
+```
+- To set children's position within a Row
+    - set the horizontalArrangement and verticalAlignment arguments.
+ - For a Column
+    - set the verticalArrangement and horizontalAlignment arguments.
+
+- different vertical arrangements:equal weight, space between, space around, space evenly, top, center and bottom
+- different horizontal arrangements: equal weight, space between, space around, space evenly, end, center and start
+
+
+
+
+
+
+
+
+
+
