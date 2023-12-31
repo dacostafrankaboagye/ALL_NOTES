@@ -208,7 +208,54 @@ fun GreetingPreview() {
 
 
 ```
+---
 
+ Understand this:
+ Jetpack Compose is a modern toolkit for building Android UI. Jetpack Compose simplifies and accelerates UI development on Android with less code, powerful tools, and intuitive Kotlin APIs.
+ 
+ The user interface (UI) of an app is what you see on the screen: text, images, buttons, and many other types of elements.
+ 
+ Composable functions are the basic building block of Compose. A composable function is a function that describes some part of your UI.
+ 
+ The Composable function is annotated with the @Composable annotation; this annotation informs the Compose compiler that this function is intended to convert data into UI.
+ 
+ The three basic standard layout elements in Compose are Column, Row, and Box. They are Composable functions that take Composable content, so you can place items inside. 
+ 
+ For example, each child within a Row will be placed horizontally next to each other.
+
+---
+
+# Note
+ Modifiers tell a UI element how to lay out, display, or behave within its parent layout
+
+ ## Adding Images
+
+ - Resource Manager is a tool window that lets you import, create, manage, and use resources in your app.
+ - For photographs and background images you should place them in the drawable-nodpi folder, which stops the resizing behavior.
+ - you can use an Image composable to display an image.
+
+## Grouping Resources
+
+- An example
+```kt
+
+MyProject/
+    src/
+        MyActivity.kt
+    res/
+        drawable/
+            graphic.png
+        mipmap/
+            icon.png
+        values/
+            strings.xml
+
+```
+ drawable/ directory for an image resource
+ mipmap/ directory for launcher icons
+ values/ directory for string resources.
+
+ Resources can be accessed with resource IDs that are generated in your project's R class.
 
 
 
