@@ -24,3 +24,28 @@ fun BirthdayCardPreview() {
 ```
 
 - The compose function that returns nothing and bears the @Composable annotation MUST be named using pascal case
+- It's a best practice to have your Composable accept a Modifier parameter, and pass that modifier to its first child.
+- The scalable pixels (SP) is a unit of measure for the font size
+
+---
+
+- UI elements in Android apps use two different units of measurement:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
