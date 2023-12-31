@@ -380,6 +380,36 @@ fun GreetingPreview() {
 
 
 ```
+---
+
+## Change opacity and scale the image
+
+-  use the ContentScale parameters.
+  
+-   You use the ContentScale.Crop parameter scaling, which scales the image uniformly to
+  maintain the aspect ratio so that the width and height of the image are equal to, or larger than, the corresponding dimension of the screen.
+
+```kt
+
+import androidx.compose.ui.layout.ContentScale
+
+Image(
+    painter = image,
+    contentDescription = null,
+    contentScale = ContentScale.Crop
+)
+```
+
+### Change opacity
+
+```kt
+
+Image(
+   painter = image,
+   contentDescription = null,
+   contentScale = ContentScale.Crop,
+   alpha = 0.5F
+)
 
 
-
+```
