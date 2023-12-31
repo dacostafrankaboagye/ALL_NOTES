@@ -102,10 +102,112 @@ fun GreetingPreview() {
    - Row
    - Box composables
  - these composables can act as parent UI elements.
+ - take composable content as arguments
+```kt
+
+// each child element inside a Row composable is placed horizontally next to each other in a row
+Row {
+    Text("First Column")
+    Text("Second Column")
+}
+```
+- When you pass a function as that parameter, you can use trailing lambda syntax.
+
+```kt
+
+Row(
+    content = {
+        Text("Some text")
+        Text("Some more text")
+        Text("Last text")
+    }
+)
 
 
+Row {
+    Text("Some text")
+    Text("Some more text")
+    Text("Last text")
+}
+```
+
+---
+
+- It is a good practice to pass the modifier attribute(s) along with the modifier from the parent composable.
+
+```kt
+
+package com.example.happybirthday
+
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.example.happybirthday.ui.theme.HappyBirthdayTheme
+
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            HappyBirthdayTheme {
+                // A surface container using the 'background' color from the theme
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    GreetingText(message = "Happy New Year", from = "From:  Frank")
+                }
+            }
+        }
+    }
+}
+
+//@Composable
+//fun Greeting(name: String, modifier: Modifier = Modifier) {
+//    Text(
+//        text = "Hello $name!",
+//        modifier = modifier
+//    )
+//}
+
+@Composable
+fun GreetingText(modifier: Modifier = Modifier, message: String, from: String) {
+    Column(modifier = modifier, verticalArrangement = Arrangement.Center) {
+        Text(text = message, fontSize = 100.sp, lineHeight = 116.sp, textAlign = TextAlign.Center)
+        Text(text = from, fontSize = 36.sp, modifier=Modifier.padding(16.dp).align(alignment = Alignment.End))
+    }
+
+}
+
+@Preview(
+    showBackground = true,
+    name = "myApp",
+    showSystemUi = false
+)
+@Composable
+fun GreetingPreview() {
+    HappyBirthdayTheme {
+        GreetingText(message = "Happy New Year", from = "From:  Frank")
+
+    }
+}
 
 
+```
 
 
 
