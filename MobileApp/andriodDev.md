@@ -234,6 +234,11 @@ fun GreetingPreview() {
  - For photographs and background images you should place them in the drawable-nodpi folder, which stops the resizing behavior.
  - you can use an Image composable to display an image.
 
+   Note
+   -  Select Density from the QUALIFIER TYPE drop-down list
+   -  Select No Density from the VALUE list.
+
+
 ## Grouping Resources
 
 - An example
