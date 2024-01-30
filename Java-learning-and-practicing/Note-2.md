@@ -15,3 +15,5 @@ public static int abs(int a) { return (a < 0) ? -a : a; }
 public static float abs(float a) { return (a <= 0.0F) ? 0.0F - a : a; }
   
 ```
+
+        Two methods can have the same name, the same return type but different type of arguments.
