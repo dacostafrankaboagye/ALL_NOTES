@@ -17,3 +17,26 @@ public static float abs(float a) { return (a <= 0.0F) ? 0.0F - a : a; }
 ```
 
         Two methods can have the same name, the same return type but different type of arguments.
+
+
+Note
+```java
+
+public static String toString(long num) {
+    return // some string
+}
+    
+public static String toString(int num) {
+    return // some string
+}
+
+
+float val = 2F; toString(val);	-> none of the methods above
+long val = 2L; toString(val);	-> long will be called
+int val = 2; toString(val);	    -> int will be called
+byte val = 2; toString(val);	-> int will be called
+char val = 2; toString(val);	-> int will be called
+double val = 2; toString(val);	-> none of the methods will ne called
+
+
+```
