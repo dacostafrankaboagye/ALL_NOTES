@@ -1,5 +1,5 @@
 
-From :: Hugging Face
+From :::: Hugging Face
 # NLP
 - NLP is a field of linguistics and machine learning focused on understanding everything related to human language. 
 - NLP isn’t limited to written text though. It also tackles complex challenges in speech recognition
@@ -70,8 +70,7 @@ confidence of about 91%
 '''
 
 ```
-
-### Text generation
+### Text generation.
 
     - Text generation involves randomness. 
     - Uses input prompt to generate a text
@@ -90,8 +89,6 @@ system of Harvard need to enroll in online exams—a basic exam that requires st
 to do at least 100 hours of work weekly and includes standardized test feedback.\n\nThis was the case with the Stanford'}]
 
 ```
-
-
 ## Using model
 
 ```py
