@@ -342,14 +342,69 @@ public class Main{
 
 ## Worked Example - 11
 
+    formats
+
 ```java
+
+
+public class TryOut{
+
+
+
+    public static void main(String[] args) {
+
+
+        String name = "Frank";
+        System.out.printf("%10s", name); //  "    Frank"
+        System.out.printf("%-10s", name); // "Frank    "
+
+
+
+        double gradePointAverage = 23.9077123;
+        double classPointAverage = 2899102.91722;
+        System.out.printf("%5.2f", gradePointAverage); // 23.91
+        System.out.println();
+        System.out.printf("%.2f", classPointAverage); // 2899102.92
+
+
+    
+        // %n -> emits the appropriate line terminators
+        String firstName = "Frank";
+        String lastName = "Aboagye";
+        System.out.printf("%s%n", firstName);
+        System.out.printf("%s", firstName);
+
+        
+    }
+}
 
 ```
 --- 
 
 ## Worked Example - 12
 
+    JOptionPane
+
 ```java
+
+import javax.swing.JOptionPane;
+
+public class TryOut{
+
+
+
+    public static void main(String[] args) {
+
+        String input = JOptionPane.showInputDialog("Enter Price");
+        
+        double userPrice = Double.parseDouble(input);
+
+        JOptionPane.showMessageDialog(null, "The Price" + userPrice);
+
+        System.exit(0);
+        
+    }
+}
 
 ```
 
@@ -358,14 +413,89 @@ public class Main{
 
 ## Worked Example - 13
 
+    Enum
+
 ```java
+
+enum FilingStatus {
+    SINGLE,
+    MARRIED,
+    DATING,
+    PREFER_NOT_TO_SAY
+}
+
+public class TryOut{
+
+    public static void main(String[] args) {
+
+            FilingStatus benStatus = FilingStatus.SINGLE;
+            FilingStatus frankStatus = FilingStatus.PREFER_NOT_TO_SAY;
+            System.out.println("Status : " + benStatus);
+            System.out.println("Status : " + frankStatus.ordinal());
+
+            FilingStatus[] myStatusValues = FilingStatus.values();
+            for(FilingStatus status : myStatusValues){
+                System.out.println(status);
+            }
+
+        
+    }
+}
 
 ```
 --- 
 
 ## Worked Example - 14
 
+    Investment 
+
 ```java
+
+
+class Investment{
+
+    private double balance, rate;
+    private int years;
+
+    public Investment(double aBalance, double aRate){
+        balance = aBalance;
+        rate = aRate;
+        years = 0;
+    }
+
+    public void waitForBalance(double targetBalance){
+        while(balance < targetBalance){
+            years++;
+            double interest = balance * rate / 100;
+            balance = balance + interest;
+        }
+    }
+
+    public double getBalance(){
+        return balance;
+    }
+
+    public int getYears(){
+        return years;
+    }
+}
+
+
+public class TryOut{
+
+    public static void main(String[] args) {
+
+        final double INITIAL_BALANCE = 10_000;
+        final double RATE = 5;
+
+        Investment frankInvestment = new Investment(INITIAL_BALANCE, RATE);
+        frankInvestment.waitForBalance(2*INITIAL_BALANCE);
+        int years = frankInvestment.getYears();
+        System.out.println("Frank's investment doubled after " + years + " years");
+        
+        
+    }
+}
 
 ```
 
@@ -374,14 +504,81 @@ public class Main{
 
 ## Worked Example - 15
 
+    Simple - Game - Predict Number
+
 ```java
+
+import javax.swing.JOptionPane;
+
+public class TryOut{
+
+    public static void main(String[] args) {
+        
+        int value = -1;
+        String userInput;
+        String userMessage = "Predict the Number";
+        int systemNumber = (int) (Math.random() * 10);
+
+        System.out.println("System Number : " + systemNumber);
+
+        boolean continueGame = true;
+        
+
+        System.out.println(systemNumber);
+    
+        do{
+            userInput = JOptionPane.showInputDialog(userMessage);
+            value = Integer.parseInt(userInput);
+
+            if(value == systemNumber){
+                continueGame = false;
+                userMessage = "PASSED";
+
+            }else if(value < systemNumber){
+                userMessage = "FAILED - Go Higher";
+
+            }else{
+                userMessage = "FAILED - Go Lower";
+
+            }
+
+            JOptionPane.showMessageDialog(null, userMessage, "Result", 1);
+
+        }while(continueGame);
+
+        System.exit(0);
+    }
+}
 
 ```
 --- 
 
 ## Worked Example - 16
 
+    simulate the cast of a die as follows
+
 ```java
+
+import java.util.Random;
+
+public class TryOut{
+
+    public static void main(String[] args) {
+    
+        /*
+         The call generator.nextInt(6) gives you a 
+         random number between 0 and 5 (inclusive). 
+         Add 1 to obtain a number between 1 and 6.
+         */
+        
+        Random generator = new Random();
+        int d = 1 + generator.nextInt(6);
+
+        System.out.println(d);
+        
+
+    }
+}
 
 ```
 
