@@ -1,27 +1,14 @@
-/** 
- A Try of the docs
-*/
+import java.math.BigDecimal;
 
-class TryOut {
+public class TryOut{
 
-    /**
-       Withdraws money from the bank account.
-       @param amount the amount to wothdraw    
-    */
-    public void withdraw(double amount){
-        // implementation here
-    }
 
-    /** 
-       Gets the current balance
-       @return the current balance
-    */
-    public double getBalance(){
-        return 0;
-    }
+
     public static void main(String[] args) {
+
+        System.out.println(Math.log10(10));
+
+
         
     }
-    
-
 }
