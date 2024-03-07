@@ -628,8 +628,23 @@ public class TryOut {
 
 ## Worked Example - 18
 
+    wrapper
+
 ```java
 
+Double gpa = 49.920;
+double gpa2 = gpa.doubleValue(); // or same as
+double gpa3 = gpa; // auto-unboxing
+
+//------------
+ArrayList<Double> myList = new ArrayList<>();
+myList.add(1234.2);
+myList.add(-987.2);
+
+for(double x : myList){
+    System.out.println(x);
+}
+        
 ```
 
 
@@ -637,7 +652,54 @@ public class TryOut {
 
 ## Worked Example - 19
 
+    copy array
+
 ```java
+
+import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class TryOut {
+
+    public static void main(String[] args) {
+
+        PrintStream printer = System.out;
+
+        String[] fruits = {"mango", "guava"};
+        String[] theOther = fruits;
+
+        String[] another = Arrays.copyOf(fruits, fruits.length);
+
+        fruits[0] = "apple";
+
+        printer.println("-------fruits");
+        for(String x : fruits){
+            printer.print(x + " ");
+        }
+        printer.println(" ");
+        printer.println("---------theOther");
+        for(String x : theOther){
+            printer.print(x + " ");
+        }
+        printer.println(" ");
+        printer.println("---------true copy");
+        for(String x : another){
+            printer.print(x + " ");
+        }
+    }
+}
+
+/*
+
+-------fruits
+apple guava       
+---------theOther 
+apple guava       
+---------true copy
+mango guava 
+
+*/
 
 ```
 --- 

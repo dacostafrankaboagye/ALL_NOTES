@@ -1,31 +1,19 @@
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class TryOut {
 
     public static void main(String[] args) {
 
         PrintStream printer = System.out;
+        String[] fruits = {"mango", "guava"};
 
-        ArrayList<Integer> a = new ArrayList<>();
-        a.add(12);
-        a.add(29);
-        a.add(48);
-        a.add(190);
 
-        a.set(3, 20);
+        String[] another = Arrays.copyOf(fruits, fruits.length * 2);
 
-        for (int i : a) {
-            printer.println(i);
+        for(String x : another){
+            printer.println(x);
         }
-
-        printer.println("Size of the Array = " + a.size());
-
-        // get the last element
-        int lastElement = a.get(a.size() - 1);
-        printer.println("last element  = " + lastElement);
-
-        ArrayList<String> names = new ArrayList<>(10); // initial capacity
-
     }
 }
