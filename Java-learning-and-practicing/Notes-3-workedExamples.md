@@ -800,7 +800,36 @@ class BankAccount{
 
 ## Worked Example - 23
 
+    Running Test 
+
 ```java
+
+class Calculator{
+
+    public int add(int num1, int num2) {
+        return num1 + num2;
+    }
+
+    public int multiply(int num1, int num2) {
+        return num1 * num2;
+
+    }
+}
+
+//  another file
+
+import org.junit.*;
+
+public class CalculatorTest {
+    @Test
+    public void addTwoPositiveIntegers() {
+        Calculator calculator = new Calculator();
+        int calculatorResult = calculator.add(12, 10);
+        int actualResult = 22;
+        Assert.assertEquals(actualResult, calculatorResult);
+    }
+
+}
 
 ```
 --- 
