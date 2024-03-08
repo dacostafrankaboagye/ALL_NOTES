@@ -40,3 +40,29 @@ double val = 2; toString(val);	-> none of the methods will ne called
 
 
 ```
+
+---
+
+## Note this
+
+    Dont' chnage the contents of parameter Variables
+
+```java
+
+public void deposit(double amount){
+    // Using the parameter variable to hold an intermediate value
+    amount = balance + amount; // Poor style
+    . . . 
+}
+
+
+// Don’t assign new values to them. Instead, introduce a new local variable.
+
+public void deposit(double amount){
+    double newBalance = balance + amount;
+    . . . 
+}
+
+```
+
+

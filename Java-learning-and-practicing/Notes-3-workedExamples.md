@@ -706,6 +706,107 @@ mango guava
 
 ## Worked Example - 20
 
+    Assert
+
+```java
+
+
+public class TryOut {
+
+    public static double divide(double numerator, double denominator) {
+        assert denominator != 0 : "Denominator cannot be zero";
+        double result = numerator / denominator;
+        return result;
+    }
+
+    public static void main(String[] args) {
+        double numerator = 10.0;
+        double denominator = 0.0;
+
+        // Use the divide method to perform division
+        double result = divide(numerator, denominator);
+
+        // Display the result
+        System.out.println("Result of division: " + result);
+
+    }
+}
+
+// javac TryOut.java
+// java -ea TryOut
+// or
+// java -enableassertions TryOut
+
+```
+
+
+--- 
+
+## Worked Example - 21
+
+    static
+
+```java
+
+
+import static java.lang.Math.*;
+import static java.lang.System.*;
+
+public class TryOut {
+
+    public static void main(String[] args) {
+        double piSquared = sqrt(PI); // Instead of Math.sqrt(Math.PI)
+        out.println(piSquared); // Instaead of System.out.println(...)
+
+    }
+}
+
+```
+--- 
+
+## Worked Example - 22
+
+    Initialization blocks are rarely used in practice.
+
+    But this is it
+
+```java
+
+class Coin{
+    private double value;
+    private String name;
+    {
+        value = 1;
+        name = "Dollar";
+    }
+}
+
+// for static
+
+class BankAccount{
+    private static int lastAssignedNumber;
+
+    static{
+        lastAssignedNumber = 1000;
+    }
+}
+
+
+
+```
+
+
+--- 
+
+## Worked Example - 23
+
+```java
+
+```
+--- 
+
+## Worked Example - 24
+
 ```java
 
 ```
@@ -713,30 +814,14 @@ mango guava
 
 --- 
 
-## Worked Example - 2
+## Worked Example - 25
 
 ```java
 
 ```
 --- 
 
-## Worked Example - 2
-
-```java
-
-```
-
-
---- 
-
-## Worked Example - 2
-
-```java
-
-```
---- 
-
-## Worked Example - 2
+## Worked Example - 26
 
 ```java
 
@@ -745,23 +830,7 @@ mango guava
 
 --- 
 
-## Worked Example - 2
-
-```java
-
-```
---- 
-
-## Worked Example - 2
-
-```java
-
-```
-
-
---- 
-
-## Worked Example - 2
+## Worked Example - 27
 
 ```java
 
