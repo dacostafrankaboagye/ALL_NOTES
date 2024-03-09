@@ -836,7 +836,18 @@ public class CalculatorTest {
 
 ## Worked Example - 24
 
+    Interface
+
 ```java
+
+public interface InterfaceName{
+    
+    // no instance variables
+
+    // method signatures
+        // name, parameters, return type, no-implementation
+        // methods are automatically "public"
+}
 
 ```
 
