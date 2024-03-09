@@ -36,12 +36,11 @@ class TryOut {
 
 ```
 
---- 
+---
 
 ## Worked Example - 2
 
     Understanding Object Reference
-
 
 ```java
 
@@ -80,8 +79,7 @@ class TryOut {
 
 ```
 
-
---- 
+---
 
 ## Worked Example - 3
 
@@ -125,10 +123,9 @@ public class Main{
 
 ```
 
---- 
+---
 
 ## Worked Example - 4
-
 
     Simple JFrame
 
@@ -155,8 +152,7 @@ public class Main{
 
 ```
 
-
---- 
+---
 
 ## Worked Example - 5
 
@@ -203,7 +199,8 @@ class RectangleViewer{
 
 
 ```
---- 
+
+---
 
 ## Worked Example - 6
 
@@ -217,8 +214,7 @@ class RectangleViewer{
 
 ```
 
-
---- 
+---
 
 ## Worked Example - 7
 
@@ -236,7 +232,8 @@ class RectangleViewer{
         Line2D.Double segment2 =  new Line2D.Double(from, to);
 
 ```
---- 
+
+---
 
 ## Worked Example - 8
 
@@ -249,8 +246,7 @@ class RectangleViewer{
 
 ```
 
-
---- 
+---
 
 ## Worked Example - 9
 
@@ -267,7 +263,8 @@ class RectangleViewer{
 
 
 ```
---- 
+
+---
 
 ## Worked Example - 10
 
@@ -337,8 +334,7 @@ public class Main{
 
 ```
 
-
---- 
+---
 
 ## Worked Example - 11
 
@@ -367,19 +363,20 @@ public class TryOut{
         System.out.printf("%.2f", classPointAverage); // 2899102.92
 
 
-    
+
         // %n -> emits the appropriate line terminators
         String firstName = "Frank";
         String lastName = "Aboagye";
         System.out.printf("%s%n", firstName);
         System.out.printf("%s", firstName);
 
-        
+
     }
 }
 
 ```
---- 
+
+---
 
 ## Worked Example - 12
 
@@ -396,20 +393,19 @@ public class TryOut{
     public static void main(String[] args) {
 
         String input = JOptionPane.showInputDialog("Enter Price");
-        
+
         double userPrice = Double.parseDouble(input);
 
         JOptionPane.showMessageDialog(null, "The Price" + userPrice);
 
         System.exit(0);
-        
+
     }
 }
 
 ```
 
-
---- 
+---
 
 ## Worked Example - 13
 
@@ -438,16 +434,17 @@ public class TryOut{
                 System.out.println(status);
             }
 
-        
+
     }
 }
 
 ```
---- 
+
+---
 
 ## Worked Example - 14
 
-    Investment 
+    Investment
 
 ```java
 
@@ -492,15 +489,14 @@ public class TryOut{
         frankInvestment.waitForBalance(2*INITIAL_BALANCE);
         int years = frankInvestment.getYears();
         System.out.println("Frank's investment doubled after " + years + " years");
-        
-        
+
+
     }
 }
 
 ```
 
-
---- 
+---
 
 ## Worked Example - 15
 
@@ -513,7 +509,7 @@ import javax.swing.JOptionPane;
 public class TryOut{
 
     public static void main(String[] args) {
-        
+
         int value = -1;
         String userInput;
         String userMessage = "Predict the Number";
@@ -522,10 +518,10 @@ public class TryOut{
         System.out.println("System Number : " + systemNumber);
 
         boolean continueGame = true;
-        
+
 
         System.out.println(systemNumber);
-    
+
         do{
             userInput = JOptionPane.showInputDialog(userMessage);
             value = Integer.parseInt(userInput);
@@ -551,7 +547,8 @@ public class TryOut{
 }
 
 ```
---- 
+
+---
 
 ## Worked Example - 16
 
@@ -564,26 +561,25 @@ import java.util.Random;
 public class TryOut{
 
     public static void main(String[] args) {
-    
+
         /*
-         The call generator.nextInt(6) gives you a 
-         random number between 0 and 5 (inclusive). 
+         The call generator.nextInt(6) gives you a
+         random number between 0 and 5 (inclusive).
          Add 1 to obtain a number between 1 and 6.
          */
-        
+
         Random generator = new Random();
         int d = 1 + generator.nextInt(6);
 
         System.out.println(d);
-        
+
 
     }
 }
 
 ```
 
-
---- 
+---
 
 ## Worked Example - 17
 
@@ -624,7 +620,8 @@ public class TryOut {
 }
 
 ```
---- 
+
+---
 
 ## Worked Example - 18
 
@@ -644,11 +641,10 @@ myList.add(-987.2);
 for(double x : myList){
     System.out.println(x);
 }
-        
+
 ```
 
-
---- 
+---
 
 ## Worked Example - 19
 
@@ -693,16 +689,17 @@ public class TryOut {
 /*
 
 -------fruits
-apple guava       
----------theOther 
-apple guava       
+apple guava
+---------theOther
+apple guava
 ---------true copy
-mango guava 
+mango guava
 
 */
 
 ```
---- 
+
+---
 
 ## Worked Example - 20
 
@@ -739,8 +736,7 @@ public class TryOut {
 
 ```
 
-
---- 
+---
 
 ## Worked Example - 21
 
@@ -762,7 +758,8 @@ public class TryOut {
 }
 
 ```
---- 
+
+---
 
 ## Worked Example - 22
 
@@ -795,12 +792,11 @@ class BankAccount{
 
 ```
 
-
---- 
+---
 
 ## Worked Example - 23
 
-    Running Test 
+    Running Test
 
 ```java
 
@@ -832,7 +828,8 @@ public class CalculatorTest {
 }
 
 ```
---- 
+
+---
 
 ## Worked Example - 24
 
@@ -841,8 +838,11 @@ public class CalculatorTest {
 ```java
 
 public interface InterfaceName{
-    
-    // no instance variables
+
+    // no instance variables - but you can declare constant
+        // (the constanst will be "public static final" -> you can omit that - infact-> omit it -> just write the type)
+            // example : instead of === "public static final int LENGTH = 9"
+            //           write this === "int LENGTH = 9"
 
     // method signatures
         // name, parameters, return type, no-implementation
@@ -851,15 +851,15 @@ public interface InterfaceName{
 
 ```
 
-
---- 
+---
 
 ## Worked Example - 25
 
 ```java
 
 ```
---- 
+
+---
 
 ## Worked Example - 26
 
@@ -867,31 +867,31 @@ public interface InterfaceName{
 
 ```
 
-
---- 
+---
 
 ## Worked Example - 27
 
 ```java
 
 ```
---- 
 
+---
+
 ## Worked Example - 2
 
 ```java
 
 ```
 
+---
 
---- 
-
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
+
+---
 
 ## Worked Example - 2
 
@@ -899,15 +899,15 @@ public interface InterfaceName{
 
 ```
 
+---
 
---- 
-
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
+
+---
 
 ## Worked Example - 2
 
@@ -915,15 +915,15 @@ public interface InterfaceName{
 
 ```
 
+---
 
---- 
-
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
+
+---
 
 ## Worked Example - 2
 
@@ -931,15 +931,15 @@ public interface InterfaceName{
 
 ```
 
+---
 
---- 
-
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
+
+---
 
 ## Worked Example - 2
 
@@ -947,15 +947,15 @@ public interface InterfaceName{
 
 ```
 
+---
 
---- 
-
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
+
+---
 
 ## Worked Example - 2
 
@@ -963,15 +963,15 @@ public interface InterfaceName{
 
 ```
 
+---
 
---- 
-
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
+
+---
 
 ## Worked Example - 2
 
@@ -979,15 +979,15 @@ public interface InterfaceName{
 
 ```
 
+---
 
---- 
-
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
+
+---
 
 ## Worked Example - 2
 
@@ -995,15 +995,15 @@ public interface InterfaceName{
 
 ```
 
+---
 
---- 
-
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
+
+---
 
 ## Worked Example - 2
 
@@ -1011,15 +1011,15 @@ public interface InterfaceName{
 
 ```
 
+---
 
---- 
-
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
+
+---
 
 ## Worked Example - 2
 
@@ -1027,15 +1027,15 @@ public interface InterfaceName{
 
 ```
 
+---
 
---- 
-
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
+
+---
 
 ## Worked Example - 2
 
@@ -1043,15 +1043,15 @@ public interface InterfaceName{
 
 ```
 
+---
 
---- 
-
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
+
+---
 
 ## Worked Example - 2
 
@@ -1059,15 +1059,15 @@ public interface InterfaceName{
 
 ```
 
+---
 
---- 
-
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
+
+---
 
 ## Worked Example - 2
 
@@ -1075,15 +1075,15 @@ public interface InterfaceName{
 
 ```
 
+---
 
---- 
-
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
+
+---
 
 ## Worked Example - 2
 
@@ -1091,15 +1091,15 @@ public interface InterfaceName{
 
 ```
 
+---
 
---- 
-
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
+
+---
 
 ## Worked Example - 2
 
@@ -1107,15 +1107,15 @@ public interface InterfaceName{
 
 ```
 
+---
 
---- 
-
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
+
+---
 
 ## Worked Example - 2
 
@@ -1123,271 +1123,271 @@ public interface InterfaceName{
 
 ```
 
+---
 
---- 
-
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
 
+---
+
 ## Worked Example - 2
 
 ```java
 
 ```
-
 
---- 
+---
 
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
 
+---
+
 ## Worked Example - 2
 
 ```java
 
 ```
-
 
---- 
+---
 
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
 
+---
+
 ## Worked Example - 2
 
 ```java
 
 ```
-
 
---- 
+---
 
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
 
+---
+
 ## Worked Example - 2
 
 ```java
 
 ```
-
 
---- 
+---
 
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
 
+---
+
 ## Worked Example - 2
 
 ```java
 
 ```
-
 
---- 
+---
 
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
 
+---
+
 ## Worked Example - 2
 
 ```java
 
 ```
-
 
---- 
+---
 
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
 
+---
+
 ## Worked Example - 2
 
 ```java
 
 ```
-
 
---- 
+---
 
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
 
+---
+
 ## Worked Example - 2
 
 ```java
 
 ```
-
 
---- 
+---
 
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
 
+---
+
 ## Worked Example - 2
 
 ```java
 
 ```
-
 
---- 
+---
 
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
 
+---
+
 ## Worked Example - 2
 
 ```java
 
 ```
-
 
---- 
+---
 
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
 
+---
+
 ## Worked Example - 2
 
 ```java
 
 ```
-
 
---- 
+---
 
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
 
+---
+
 ## Worked Example - 2
 
 ```java
 
 ```
-
 
---- 
+---
 
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
 
+---
+
 ## Worked Example - 2
 
 ```java
 
 ```
-
 
---- 
+---
 
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
 
+---
+
 ## Worked Example - 2
 
 ```java
 
 ```
-
 
---- 
+---
 
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
 
+---
+
 ## Worked Example - 2
 
 ```java
 
 ```
-
 
---- 
+---
 
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
 
+---
+
 ## Worked Example - 2
 
 ```java
 
 ```
 
+---
 
---- 
-
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
+
+---
 
 ## Worked Example - 2
 
@@ -1395,15 +1395,15 @@ public interface InterfaceName{
 
 ```
 
+---
 
---- 
-
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
+
+---
 
 ## Worked Example - 2
 
@@ -1411,15 +1411,15 @@ public interface InterfaceName{
 
 ```
 
+---
 
---- 
-
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
+
+---
 
 ## Worked Example - 2
 
@@ -1427,15 +1427,15 @@ public interface InterfaceName{
 
 ```
 
+---
 
---- 
-
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
+
+---
 
 ## Worked Example - 2
 
@@ -1443,15 +1443,15 @@ public interface InterfaceName{
 
 ```
 
+---
 
---- 
-
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
+
+---
 
 ## Worked Example - 2
 
@@ -1459,15 +1459,15 @@ public interface InterfaceName{
 
 ```
 
+---
 
---- 
-
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
+
+---
 
 ## Worked Example - 2
 
@@ -1475,15 +1475,15 @@ public interface InterfaceName{
 
 ```
 
+---
 
---- 
-
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
+
+---
 
 ## Worked Example - 2
 
@@ -1491,15 +1491,15 @@ public interface InterfaceName{
 
 ```
 
+---
 
---- 
-
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
+
+---
 
 ## Worked Example - 2
 
@@ -1507,15 +1507,15 @@ public interface InterfaceName{
 
 ```
 
+---
 
---- 
-
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
+
+---
 
 ## Worked Example - 2
 
@@ -1523,15 +1523,15 @@ public interface InterfaceName{
 
 ```
 
+---
 
---- 
-
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
+
+---
 
 ## Worked Example - 2
 
@@ -1539,15 +1539,15 @@ public interface InterfaceName{
 
 ```
 
+---
 
---- 
-
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
+
+---
 
 ## Worked Example - 2
 
@@ -1555,15 +1555,15 @@ public interface InterfaceName{
 
 ```
 
+---
 
---- 
-
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
+
+---
 
 ## Worked Example - 2
 
@@ -1571,15 +1571,15 @@ public interface InterfaceName{
 
 ```
 
+---
 
---- 
-
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
+
+---
 
 ## Worked Example - 2
 
@@ -1587,15 +1587,15 @@ public interface InterfaceName{
 
 ```
 
+---
 
---- 
-
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
+
+---
 
 ## Worked Example - 2
 
@@ -1603,15 +1603,15 @@ public interface InterfaceName{
 
 ```
 
+---
 
---- 
-
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
+
+---
 
 ## Worked Example - 2
 
@@ -1619,15 +1619,15 @@ public interface InterfaceName{
 
 ```
 
+---
 
---- 
-
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
+
+---
 
 ## Worked Example - 2
 
@@ -1635,15 +1635,15 @@ public interface InterfaceName{
 
 ```
 
+---
 
---- 
-
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
+
+---
 
 ## Worked Example - 2
 
@@ -1651,15 +1651,15 @@ public interface InterfaceName{
 
 ```
 
+---
 
---- 
-
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
+
+---
 
 ## Worked Example - 2
 
@@ -1667,15 +1667,15 @@ public interface InterfaceName{
 
 ```
 
+---
 
---- 
-
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
+
+---
 
 ## Worked Example - 2
 
@@ -1683,15 +1683,15 @@ public interface InterfaceName{
 
 ```
 
+---
 
---- 
-
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
+
+---
 
 ## Worked Example - 2
 
@@ -1699,15 +1699,15 @@ public interface InterfaceName{
 
 ```
 
+---
 
---- 
-
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
+
+---
 
 ## Worked Example - 2
 
@@ -1715,15 +1715,15 @@ public interface InterfaceName{
 
 ```
 
+---
 
---- 
-
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
+
+---
 
 ## Worked Example - 2
 
@@ -1731,15 +1731,15 @@ public interface InterfaceName{
 
 ```
 
+---
 
---- 
-
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
+
+---
 
 ## Worked Example - 2
 
@@ -1747,15 +1747,15 @@ public interface InterfaceName{
 
 ```
 
+---
 
---- 
-
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
+
+---
 
 ## Worked Example - 2
 
@@ -1763,15 +1763,15 @@ public interface InterfaceName{
 
 ```
 
+---
 
---- 
-
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
+
+---
 
 ## Worked Example - 2
 
@@ -1779,15 +1779,15 @@ public interface InterfaceName{
 
 ```
 
+---
 
---- 
-
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
+
+---
 
 ## Worked Example - 2
 
@@ -1795,15 +1795,15 @@ public interface InterfaceName{
 
 ```
 
+---
 
---- 
-
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
+
+---
 
 ## Worked Example - 2
 
@@ -1811,15 +1811,15 @@ public interface InterfaceName{
 
 ```
 
+---
 
---- 
-
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
+
+---
 
 ## Worked Example - 2
 
@@ -1827,15 +1827,15 @@ public interface InterfaceName{
 
 ```
 
+---
 
---- 
-
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
+
+---
 
 ## Worked Example - 2
 
@@ -1843,15 +1843,15 @@ public interface InterfaceName{
 
 ```
 
+---
 
---- 
-
 ## Worked Example - 2
 
 ```java
 
 ```
---- 
+
+---
 
 ## Worked Example - 2
 
@@ -1859,12 +1859,10 @@ public interface InterfaceName{
 
 ```
 
+---
 
---- 
-
 ## Worked Example - 2
 
 ```java
 
 ```
-

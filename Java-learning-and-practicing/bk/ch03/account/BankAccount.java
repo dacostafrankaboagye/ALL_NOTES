@@ -1,10 +1,18 @@
+
 /**
  * A bank account has a balance that can be changed by
  * deposit and withdrawals
  */
-public class BankAccount {
+
+import bk.ch09.the_interface.*;
+
+public class BankAccount implements Measurable{
 
     private double balance;
+
+    public double getMeasure(){
+        return balance;
+    }
 
     /**
      * Constructs a bank account with zero balance
