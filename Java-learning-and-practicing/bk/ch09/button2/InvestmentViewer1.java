@@ -28,7 +28,7 @@ public class InvestmentViewer1 {
             public void actionPerformed(ActionEvent e) {
                 // The listenner method accesses the account variable
                 // from the surrounding block
-                double interest = account.getBalance() * INTEREST_RATE / 1000;
+                double interest = account.getBalance() * INTEREST_RATE / 100;
                 account.deposit(interest);
                 System.out.println("balance: " + account.getBalance());
             }
