@@ -12,7 +12,7 @@ public class DataAnalyzer {
 
         Scanner in = new Scanner(System.in);
 
-        DataSet data = new DataSet();
+        DataSet_1 data = new DataSet_1();
 
         boolean done = false;
 

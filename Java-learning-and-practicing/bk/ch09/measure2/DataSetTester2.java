@@ -4,7 +4,20 @@ public class DataSetTester2 {
 
     public static void main(String[] args) {
 
-        Measurer m = new RectangleMeasurer();
+        // Measurer m = new RectangleMeasurer();  // we can use an inner class
+
+        class RectangleMeasurer_inner implements Measurer{
+
+            @Override
+            public double measure(Object anObject) {
+                Rectangle aRectangle = (Rectangle) anObject;
+                double area = aRectangle.getWidth() * aRectangle.getHeight();
+                return area;
+            }
+            
+        }
+
+        Measurer m = new RectangleMeasurer_inner();
 
         DataSet data = new DataSet(m);
 

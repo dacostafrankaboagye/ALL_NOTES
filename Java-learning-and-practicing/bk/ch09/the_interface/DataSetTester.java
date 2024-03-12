@@ -5,7 +5,7 @@ public class DataSetTester {
 
     public static void main(String[] args) {
 
-        DataSet bankData = new DataSet();
+        DataSet_1 bankData = new DataSet_1();
         bankData.add(new BankAccount(0));
         bankData.add(new BankAccount(10_000));
         bankData.add(new BankAccount(2000));
