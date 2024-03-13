@@ -17,6 +17,9 @@ public class ButtonViewer {
         frame.add(button); // add the button to the frame's content pane
 
         ActionListener listener =  new ClickListener(); // listener = event listener object
+        // we could decalre the Clicklistner as an inner class
+            // this would be very appropriate
+                // I can be able to access some variables, without passing them to the constructor - but it has to be declared "final"-> the surrounding local variables 
         button.addActionListener(listener); // adding the event listner object to the appropriate event source
 
         frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);

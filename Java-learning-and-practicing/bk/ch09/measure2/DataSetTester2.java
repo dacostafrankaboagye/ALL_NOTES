@@ -4,8 +4,11 @@ public class DataSetTester2 {
 
     public static void main(String[] args) {
 
+        /*
+
         // Measurer m = new RectangleMeasurer();  // we can use an inner class
 
+        // the inner class
         class RectangleMeasurer_inner implements Measurer{
 
             @Override
@@ -18,6 +21,17 @@ public class DataSetTester2 {
         }
 
         Measurer m = new RectangleMeasurer_inner();
+         */
+
+        // but we are only using the the class once -> can't we use anonymous?
+
+        Measurer m = new Measurer() {
+            public double measure(Object anObject){
+                Rectangle aRectangle = (Rectangle) anObject;
+                double area = aRectangle.getWidth() * aRectangle.getHeight();
+                return area;
+            }
+        };
 
         DataSet data = new DataSet(m);
 

@@ -15,7 +15,7 @@ public class InvestmentViewer2 {
     private static double INITIAL_BALANCE = 1000;
 
     public static void main(String[] args) {
-        
+
         JFrame frame = new JFrame();
 
         // The button to trigger the calculation
@@ -25,26 +25,26 @@ public class InvestmentViewer2 {
         final BankAccount account = new BankAccount(INITIAL_BALANCE);
 
         // The label for displaying the results
-        final JLabel label = new JLabel("balance: "+ account.getBalance());
+        final JLabel label = new JLabel("balance: " + account.getBalance());
 
         // The panel that holds the user-interface components
         JPanel panel = new JPanel();
         panel.add(button);
         panel.add(label);
-        
+
         frame.add(panel);
 
-        class AddInterestListener implements ActionListener{
+        class AddInterestListener implements ActionListener {
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 // The listener methods access the account variable
-                // from the surrounding block 
+                // from the surrounding block
                 double interest = account.getBalance() * INTEREST_RATE / 100;
                 account.deposit(interest);
                 label.setText("balance: " + account.getBalance());
             }
-            
+
         }
 
         ActionListener listener = new AddInterestListener();
@@ -54,5 +54,5 @@ public class InvestmentViewer2 {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
-    
+
 }

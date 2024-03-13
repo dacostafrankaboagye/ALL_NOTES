@@ -855,7 +855,70 @@ public interface InterfaceName{
 
 ## Worked Example - 25
 
+    constructs a frame with a button and add a ClickListener to the button
+
+    - Indicate events to receive
+        - install a listener objects
+            - listener objects belong to a class that you provide
+                - (
+                    The methods of your event listener
+                    classes contain the instructions that you want
+                    to have executed when the events occur
+                )
+        - intalling a listener
+            - know the event source  ( the UI component that generate the event)
+            - add the event listner object to the approprate event source
+
 ```java
+
+// package bk.ch09.button1;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+/**
+ * An action listener that prints a message
+*/
+public class ClickListener implements ActionListener{
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        System.out.println("Clicked!!");
+    }
+
+}
+
+//=========== another file
+
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+
+/**
+ * This program demonstrates how to install an action listener
+*/
+
+public class ButtonViewer {
+
+    private static final int FRAME_WIDTH = 100;
+    private static final int FRAME_HEIGHT = 60;
+
+    public static void main(String[] args){
+        JFrame frame = new JFrame();
+        JButton button = new JButton("Click me");
+        frame.add(button); // add the button to the frame's content pane
+
+        ActionListener listener =  new ClickListener(); // listener = event listener object
+        // we could decalre the Clicklistner as an inner class
+            // this would be very appropriate
+                // I can be able to access some variables, without passing them to the constructor - but it has to be declared "final"-> the surrounding local variables
+        button.addActionListener(listener); // adding the event listner object to the appropriate event source
+
+        frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+    }
+}
 
 ```
 
@@ -863,7 +926,56 @@ public interface InterfaceName{
 
 ## Worked Example - 26
 
+    use inner class to implement for the previous example -
+
 ```java
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+
+public class InvestmentViewer1 {
+
+    private static final int FRAME_HEIGHT = 60;
+    private static final int FRAME_WIDTH = 120;
+
+    private static final double INTEREST_RATE = 10;
+    private static final double INITIAL_BALANCE = 1000;
+
+    public static void main(String[] args) {
+        JFrame frame = new JFrame();
+
+        // The button to trigger the calculation
+        JButton button = new JButton("Add Interest");
+        frame.add(button);
+
+        // The application adds interest to this bank account
+        final BankAccount account = new BankAccount(INITIAL_BALANCE);
+
+        class AddInterestListener implements ActionListener{
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // The listenner method accesses the account variable
+                // from the surrounding block
+                double interest = account.getBalance() * INTEREST_RATE / 100;
+                account.deposit(interest);
+                System.out.println("balance: " + account.getBalance());
+            }
+
+        }
+
+        ActionListener listener = new AddInterestListener();
+        button.addActionListener(listener);
+        frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+    }
+
+}
+
 
 ```
 
@@ -871,13 +983,185 @@ public interface InterfaceName{
 
 ## Worked Example - 27
 
+    add multiple components to a frame, by using a panel
+    implement listeners as inner classes
+
+```java
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+public class InvestmentViewer2 {
+
+    private static int FRAME_WIDTH = 400;
+    private static int FRAME_HEIGHT = 100;
+
+    private static double INTEREST_RATE = 10;
+    private static double INITIAL_BALANCE = 1000;
+
+    public static void main(String[] args) {
+
+        JFrame frame = new JFrame();
+
+        // The button to trigger the calculation
+        JButton button = new JButton("Add Interest");
+
+        // The application adds interest to this account
+        BankAccount account = new BankAccount(INITIAL_BALANCE);
+
+        // The label for displaying the results
+        JLabel label = new JLabel("balance: "+ account.getBalance());
+
+        // The panel that holds the user-interface components
+        JPanel panel = new JPanel();
+        panel.add(button);
+        panel.add(label);
+
+        frame.add(panel);
+
+        class AddInterestListener implements ActionListener{
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // The listener methods access the account variable
+                // from the surrounding block
+                double interest = account.getBalance() * INTEREST_RATE / 100;
+                account.deposit(interest);
+                label.setText("balance: " + account.getBalance());
+            }
+
+        }
+
+        ActionListener listener = new AddInterestListener();
+        button.addActionListener(listener);
+
+        frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+    }
+
+}
+
+```
+
+---
+
+## Worked Example - 28
+
+```java
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+public class InvestmentViewer2 {
+
+    private static int FRAME_WIDTH = 400;
+    private static int FRAME_HEIGHT = 100;
+
+    private static double INTEREST_RATE = 10;
+    private static double INITIAL_BALANCE = 1000;
+
+    public static void main(String[] args) {
+
+        JFrame frame = new JFrame();
+
+        // The button to trigger the calculation
+        JButton button = new JButton("Add Interest");
+
+        // The application adds interest to this account
+        BankAccount account = new BankAccount(INITIAL_BALANCE);
+
+        // The label for displaying the results
+        JLabel label = new JLabel("balance: "+ account.getBalance());
+
+        // The panel that holds the user-interface components
+        JPanel panel = new JPanel();
+        panel.add(button);
+        panel.add(label);
+
+        frame.add(panel);
+
+        class AddInterestListener implements ActionListener{
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // The listener methods access the account variable
+                // from the surrounding block
+                double interest = account.getBalance() * INTEREST_RATE / 100;
+                account.deposit(interest);
+                label.setText("balance: " + account.getBalance());
+            }
+
+        }
+
+        ActionListener listener = new AddInterestListener();
+        button.addActionListener(listener);
+
+        frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+    }
+
+}
+
+
+```
+
+---
+
+## Worked Example - 29
+
+    Typical Structure - Inheritance - e.g.
+
+    JComponent
+    |
+    |-- JPanel
+    |-- JText Component -- JTextField, JTextArea etc.
+    |-- JLabel
+    |-- AbstractButtion [serText, setIcon] -- JButton
+                                           -- JtoggleButton -- JCheckBox JRadioButton
+
+```java
+
+public void deposit(double amount){
+    transactionCount++;
+    super.deposit(amount); // calls the method of the superclass instead of the method of the current class
+}
+
+
+public class CheckingAccount extends BankAccount{ 
+    public CheckingAccount(double initialBalance){ 
+    // Construct superclass 
+    super(initialBalance);
+    // Initialize transaction count
+    transactionCount = 0;
+    }
+    . . .
+}
+
+```
+
+---
+
+## Worked Example - 30
+
 ```java
 
 ```
 
 ---
 
-## Worked Example - 2
+## Worked Example - 31
 
 ```java
 
@@ -885,31 +1169,7 @@ public interface InterfaceName{
 
 ---
 
-## Worked Example - 2
-
-```java
-
-```
-
----
-
-## Worked Example - 2
-
-```java
-
-```
-
----
-
-## Worked Example - 2
-
-```java
-
-```
-
----
-
-## Worked Example - 2
+## Worked Example - 32
 
 ```java
 
