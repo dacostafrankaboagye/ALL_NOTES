@@ -1139,9 +1139,9 @@ public void deposit(double amount){
 }
 
 
-public class CheckingAccount extends BankAccount{ 
-    public CheckingAccount(double initialBalance){ 
-    // Construct superclass 
+public class CheckingAccount extends BankAccount{
+    public CheckingAccount(double initialBalance){
+    // Construct superclass
     super(initialBalance);
     // Initialize transaction count
     transactionCount = 0;
@@ -1155,15 +1155,133 @@ public class CheckingAccount extends BankAccount{
 
 ## Worked Example - 30
 
+    Converting between subclass and superclass Types
+
 ```java
 
+public class CheckingAccount extends BankAccount {
+
+    private static final int FREE_TRANSACTIONS = 3;
+    private static final double TRANSACTION_FEE = 2.0;
+
+    private int transactionCount;
+
+    /**
+     * Constructs checkings account with a given balance
+     *
+     * @param initialBalance
+     */
+    public CheckingAccount(double initialBalance) {
+        // construct superclass
+        super(initialBalance);
+
+        // initialize transaction count
+        transactionCount = 0;
+    }
+
+    public void deposite(double amount) {
+        transactionCount++;
+
+        // add amount to balance
+        super.deposit(amount);
+    }
+
+    public void withdraw(double amount) {
+        transactionCount++;
+
+        // subtract amount from balance
+        super.withdraw(amount);
+    }
+
+    /**
+     * Deducts the accumulated fess and resets the transaction aount
+    */
+    public void deductFees() {
+        if(transactionCount > FREE_TRANSACTIONS){
+            double fees = TRANSACTION_FEE * (transactionCount - FREE_TRANSACTIONS);
+            super.withdraw(fees);
+        }
+        transactionCount = 0;
+    }
+
+}
+
+// Note :::
+
+SavingsAccount collegeFund = new SavingsAccount(10);
+BankAccount anAccount = collegeFund; // OK -> this is fine
+
+// Furthermore, all references can be converted to the type Object.
+Object anObject = collegeFund; // OK
+
+// Now the three object references stored in collegeFund, anAccount, and anObject all
+// refer to the same object of type SavingsAccount
+
+
+//example
+public static void main(String[] args) {
+    CheckingAccount acc1 = new CheckingAccount(10);
+    BankAccount bkaac1 = acc1;
+    Object anacc1Object = bkaac1;
+
+    System.out.println(anacc1Object instanceof BankAccount); // true 
+
+// its a good idea to use instanceof : when you want to make sure that your reference refers to an instance of a specific class 
+}
+    
 ```
 
 ---
 
 ## Worked Example - 31
 
+    Varargs
+
 ```java
+public static void printNumberOfArguments(int... numbers) {
+    System.out.println(numbers.length);
+}
+
+printNumberOfArguments(1);
+printNumberOfArguments(1, 2);
+printNumberOfArguments(1, 2, 3);
+printNumberOfArguments(new int[] { }); // no arguments here
+printNumberOfArguments(new int[] { 1, 2 });
+
+public static void method(int a, double... varargs) { /* do something */ }
+
+
+// example
+
+import java.util.Arrays;
+
+public class TryOut {
+
+    public static void printNumberOfArguments(int... numbers){
+        System.out.println(Arrays.toString(numbers));
+    }
+
+    public static void testMethod(int[] array, int... vararg) {
+        System.out.println("array : " + Arrays.toString(array));
+        System.out.println("vararg : " + Arrays.toString(vararg));
+        System.err.println();
+     }
+
+    public static void main(String[] args) {
+       
+        // printNumberOfArguments(1);
+        // printNumberOfArguments(1, 2);
+        // printNumberOfArguments(1, 2, 3);
+        // printNumberOfArguments(new int[] { }); // no arguments here
+        // printNumberOfArguments(new int[] { 1, 2 });
+
+        testMethod(new int[] { 1, 2, 3 }, new int[] { 4, 5, 6 });
+        testMethod(new int[] { 1, 2, 3 }, 4, 5);
+        testMethod(new int[] { 1, 2, 3 });
+
+        printNumberOfArguments(); // [] :: note that no args were supplied
+    }
+}
 
 ```
 
@@ -1171,7 +1289,18 @@ public class CheckingAccount extends BankAccount{
 
 ## Worked Example - 32
 
+    concatenation
+
 ```java
+
+String firstName = "John";
+String lastName = "Smith";
+
+// concatenation using the "+" operator
+String fullName1 = firstName + " " + lastName; // "John Smith"
+
+// concatenation using the concat method 
+String fullName2 = firstName.concat(" ").concat(lastName); // "John Smith"
 
 ```
 
