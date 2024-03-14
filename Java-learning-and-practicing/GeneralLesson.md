@@ -1,3 +1,15 @@
+## Know these
+
+    byte = -128 to 127
+    short = -32,768 to 32,767
+    int = -2,147,483,648 to 2,147,483,647
+    long  = -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807 (unsigned)    > (append L / l)
+    double = 4.9E-324 to 1.7976931348623157E+308
+    float = 1.4E-45 to  3.4028235E38  > (append F/f)
+
+
+
+
 - Number Variables Store numbers . Object Variables store references
 
 - You can convert from a class type to an interface type, provided the class implements the interface
@@ -113,3 +125,343 @@ older versions
 ##
 
     A class body can include fields, methods, and constructors. Fields store data, methods define behavior and constructors allow us to create and initialize new objects of the class. 
+
+---
+## Format
+
+     %d integer
+     %f real number
+     %s string 
+
+     int x = 3;
+    int y = -17;
+    System.out.printf("x is %d and y is %d\n", x, y);  
+
+
+    printf width
+        %Wd integer, W characters wide, right-aligned
+        %-Wd integer, W characters wide, left-aligned
+        %Wf real number, W characters wide, right-aligned
+
+```java
+
+
+        PrintStream printer = System.out;
+
+        String a = "frank";
+
+        printer.printf("%10s", a); // "     frank"
+
+```
+
+    printf precision
+        %.Df real number, rounded to D digits after decimal
+        %W.Df real number, W chars wide, D digits after decimal
+        %-W.Df real number, W wide (left-align), D after decimal
+
+
+    String.format(".....)
+
+```java
+
+        PrintStream printer = System.out;
+
+        String name = "Frank";
+        int age = 21;
+        double salary = 5000.2910832;
+
+        String anExample = String.format("My name is %s. I am %d years old. I earn %.4f USD", name, age, salary); 
+        
+        // My name is Frank. I am 21 years old. I earn 5000.2911 USD
+
+        printer.println(anExample);
+
+```
+
+## String methods
+
+```java
+
+PrintStream printer = System.out;
+
+String anExample = "The little fox jumps over the little dog";
+
+String theReplace = anExample.replace("little", "big"); // The big fox jumps over the big dog
+boolean theContains = anExample.contains("bird");// false
+
+printer.println(theReplace);
+printer.println(theContains);
+
+```
+
+## Scanner
+
+    Note:
+        - nextLine() -> takes the input and the line(the new line character) too -> that too goes as an inout
+        - nextInt(),nextDouble() etc., take only numbers as inputs and leaves the new line character in the buffer
+
+        example: Look at this sequence
+
+        name = in.nextLine()  // you put in "frank" and press enter:  >> frank <enter>  
+        // both frank and <enter> is taken in
+        // output : frank
+        
+        age = in.nextInt()  // you put in 21 and press enter:  >> 12 <enter>
+        // only the 12 is taken in
+        // output : 12    ->  <enter> goes to the buffer
+
+        schoolname = in.nextLine() // you put in "MIT" and press enter:  >> MIT <enter>  
+        // note that <enter> is in the buffer
+        // output : ...nothing...
+        // this happens because is reads the <enter> that the user entered : which is in the buffer
+
+        // same for nextDouble, nextFloat ....
+
+
+    How do we resolve that:
+        1. 
+            - If you wnat to call nextLine() after a nextInt, or  nextDouble or nextFloat .... put an extra nextLine()
+                - this cleans up the input buffer
+
+                
+                name = in.nextLine()
+                
+                age = in.nextInt()  
+
+                in.nextLine() // for cleaning up
+
+                schoolname = in.nextLine() 
+        2.
+            - Use nextLine() for all your input and do the approprate conversion
+                Integer.parseInt()
+                Double.parseDouble()
+
+        
+
+        
+        
+
+
+
+
+        
+
+```java
+
+Scanner in = new Scanner(System.in);    
+PrintStream out = System.out;
+
+// Test
+out.print("Enter name : ");
+String name = in.nextLine();
+
+out.print("\nEnter Age: ");
+int age = in.nextInt();
+
+
+String mySelf = String.format("Welcome %s. You are %d years old", name, age);
+out.println(mySelf);
+
+in.close();
+    
+
+```
+
+## Arrays
+
+    Note:
+        - Are reference types
+
+```java
+
+PrintStream printer = System.out;
+
+int[] myArr = {3, 6, 0, 1, -2};
+Arrays.sort(myArr, 1, 4); // Sort the array from index 1 to index 4 (not inclusive)
+
+printer.println(Arrays.toString(myArr)); // [3, 0, 1, 6, -2]   //  0, 1, 6  is sorted
+     
+
+
+
+PrintStream printer = System.out;
+
+int[] myArr = {3, 6, 0, 1, -2};
+Arrays.sort(myArr);
+// search for -2
+// we use binarySearch => the arr must be sorted first
+    // the binarySearch returns the index of the found element
+    // you can also use, start index and stop index for the binary search
+int theFoundIndex = Arrays.binarySearch(myArr, -2);
+printer.println(Arrays.toString(myArr)); 
+printer.println("Found at index : " + theFoundIndex );
+
+// if the element is not found, it will give a nagative output
+
+
+
+
+// filling the array
+Arrays.fill(myArr, 0);  // [0, 0, 0, 0, 0]
+
+Arrays.fill(myArr, 1, 4, 0);  // excluding index 4 // [3, 0, 0, 0, 1, 99, 8]
+
+
+
+// making copies of an array
+    // take note arrays are reference type
+    // int numbers[] = {1}; and int[] theCopy = numbers;    -> this will copy the reference -> any changes to numbers[] will affect theCopy[] 
+
+    // do this instead
+int[] numbers = {1, 4, 5};
+int[] theCopy = Arrays.copyOf(numbers, numbers.length); // [1, 4, 5]
+// default values for integers in 0, -> if the new array was larger, the rest will be filled with 0 -> the default value
+
+
+
+int[] numbers = {1, 4, 5, 7, 1};
+
+// using starting and stopping index
+int[] anotherCopy = Arrays.copyOfRange(numbers, 0, 3); // [1, 4, 5]
+
+```
+
+---
+
+## ArrayList
+
+    - are dynamic -> can add and remove
+    - can store anything
+
+```java
+
+ArrayList<Integer> myArr = new ArrayList<>();
+
+
+myArr.add(3);
+myArr.add(4);
+myArr.add(19);
+
+myArr.stream()
+        .map(element -> element + 2)
+        .forEach(element -> System.out.println(element));
+        
+
+/* output
+    * 5
+    * 6 
+    * 21
+    */
+
+
+
+
+PrintStream printer = System.out;
+
+ArrayList<Integer> myArr = new ArrayList<>();
+
+
+myArr.add(3);
+myArr.add(4);
+myArr.add(19);
+
+printer.println(myArr.toString()); // [3, 4, 19]
+
+int myIndex = 0;
+printer.println(myArr.get(myIndex)); // 3
+
+
+myArr.remove(0);  // supply the index
+
+// what if you want to supply the number to remove - say we want to remove the 19
+myArr.remove(Integer.valueOf(19));
+
+
+// make the array list empty
+myArr.clear();
+printer.println(myArr.toString());
+
+
+// update an array list
+myArr.set(1, Integer.valueOf(99)); // [3, 99, 19]
+
+
+
+// 
+
+PrintStream printer = System.out;
+
+ArrayList<Integer> myArr = new ArrayList<>();  
+
+myArr.add(89);
+myArr.add(3);
+myArr.add(4);
+myArr.add(19);
+myArr.add(0);
+myArr.add(-1);
+
+System.out.println(myArr.toString()); 
+
+// Sort the arraylist
+    // in their natural order
+myArr.sort(null);  // null means the natural order should be used  // [-1, 0, 3, 4, 19, 89]
+// or
+myArr.sort(Comparator.naturalOrder()); // [-1, 0, 3, 4, 19, 89]
+myArr.sort(Comparator.reverseOrder()); // [89, 19, 4, 3, 0, -1]
+
+System.out.println(myArr.toString());  
+
+
+
+System.out.println(myArr.size()); // 6
+System.out.println(myArr.contains(Integer.valueOf(9))); // false
+myArr.clear();
+System.out.println(myArr.isEmpty()); // true
+
+
+// printing the elements of the array
+myArr.forEach(System.out::println);
+
+```
+
+## HashMap
+
+    - key value pair
+
+```java
+
+PrintStream printer = System.out;
+
+HashMap<String, Integer> myHashMap = new HashMap<>();
+
+myHashMap.put("Spencer", 10);
+myHashMap.put("SAmos", 7);
+myHashMap.put("Lewisky", 0);
+myHashMap.put("Henry", 12);
+
+myHashMap.putIfAbsent("Spencer", 22);
+
+myHashMap.replace("Lewisky", 20);
+
+myHashMap.forEach((key, value) -> System.out.println(key + " : " + value) );
+
+System.out.println(myHashMap.getOrDefault("kennedy", -1));  // -1 because there is no Kennedy
+
+System.out.println(myHashMap.toString()); // prints it out  // {SAmos=7, Lewisky=20, Spencer=10, Henry=12}
+
+// clear the hashmap
+myHashMap.clear();
+System.out.println(myHashMap.toString());  // {}
+
+
+// size
+System.out.println(myHashMap.size()); // 4
+
+// remove
+Object value = myHashMap.remove("SAmos"); // return null if key is not in the HashMap
+
+System.out.println(value); // null
+
+
+
+```
