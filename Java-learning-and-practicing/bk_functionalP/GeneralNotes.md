@@ -59,7 +59,7 @@ result.forEach(i->System.out.println(i));
 final List<String> friends = Arrays.asList("Spencer", "James", "Lindsay", "Lesly");
 
 for(int i=0; i<friends.size(); i++){
-    System.err.println(friends.get(i));
+    System.out.println(friends.get(i));
 }
 
 // under the hood -> uses: Iterator interface -> calls into hasNext() and next()
@@ -259,7 +259,7 @@ friends.stream()
     The filter() method returns an iterator just like the map() method does, but the
     similarity ends there. Whereas the map() method returns a collection of the
     same size as the input collection, the filter() method may not (zero to the 
-    maximumnumber of elements in the input collection)
+    maximum number of elements in the input collection)
 
 ```java
 
