@@ -162,7 +162,6 @@ friends.forEach(System.out::println);
 
 ```
 
-
 ## Task - Suppose we’re asked to convert a list of names to all capital letters.
 
 ```java
@@ -172,7 +171,7 @@ final List<String> friends = Arrays.asList("Spencer", "James", "Lindsay", "Lesly
 
 final List<String> upperCaseNames = new ArrayList<>();
 
-// imperatiive approach 
+// imperatiive approach
 for(String name : friends){
     upperCaseNames.add(name.toUpperCase());
 }
@@ -197,7 +196,7 @@ for(String name : friends){
      and returns the result collection
 
 ```java
-// next 
+// next
 final List<String> friends = Arrays.asList("Spencer", "James", "Lindsay", "Lesly");
 
 friends.stream()
@@ -209,6 +208,7 @@ System.out.println();
 ```
 
 ## element input and output types
+
     one of the advantages - element types in the input don’t have to match the element types in the output collection.
 
 ```java
@@ -223,7 +223,7 @@ friends.stream()
 
 # method reference
 
-    The Java compiler will take either a lambda expression or 
+    The Java compiler will take either a lambda expression or
     a reference to a method where an implementation of a functional interface is
     expected.
 
@@ -239,7 +239,7 @@ friends.stream()
 
 
 // we are replacing the lambda expression
-.map(element -> element.toUpperCase())  
+.map(element -> element.toUpperCase())
 //with
 .map(String::toUpperCase)
 
@@ -258,7 +258,7 @@ friends.stream()
 
     The filter() method returns an iterator just like the map() method does, but the
     similarity ends there. Whereas the map() method returns a collection of the
-    same size as the input collection, the filter() method may not (zero to the 
+    same size as the input collection, the filter() method may not (zero to the
     maximum number of elements in the input collection)
 
 ```java
@@ -289,9 +289,9 @@ final List<String> startsWthN = friends.stream()
     Now let’s see how easy it is to fall into the duplication trap when using
     lambda expressions, and consider ways to avoid it
 
-The filter() method
-    - takes a reference to a java.util.function.Predicate functional interface
-    - the Java compiler works to synthesize an implementation of the Predicate’s test() method from the given lambda expression.
+    The filter() method
+        - takes a reference to a java.util.function.Predicate functional interface
+        - the Java compiler works to synthesize an implementation of the Predicate’s test() method from the given lambda expression.
 
     what does this mean?
     - Rather than asking Java to synthesize the method at the argument-definition location, we can be more explicit
@@ -305,7 +305,7 @@ final List<String> friends = Arrays.asList("Brian", "Nate", "Neal", "Raju", "Sar
 final List<String> editors = Arrays.asList("Brian", "Jackie", "John", "Mike");
 final List<String> comrades = Arrays.asList("Kate", "Ken", "Nick", "Paula", "Zach");
 
-// 1. 
+// 1.
 
 
 
@@ -343,6 +343,7 @@ and stored it in a reference named startsWithN of type Predicate
     duplication will sneak in quickly when we bring in another letter to match
 
     Let’s pick the names that start with N or B from the friends collection of names
+
 ```java
 
         final List<String> friends = Arrays.asList("Brian", "Nate", "Neal", "Raju", "Sara", "Scott");
@@ -427,6 +428,7 @@ final long countFriendsStartB = friends.stream().filter(startsWithLetter.apply("
 System.out.println(countFriendsStartB + " " + countFriendsStartN); // 1 2
 
 ```
+
     This lambda expression replaces the static method checkIfStartsWith() and can
     appear within a function, just before it’s needed. The startsWithLetter variable
     refers to a Function that takes in a String and returns a Predicate.
@@ -485,3 +487,76 @@ System.out.println(countFriendsStartB + " " + countFriendsStartN); // 1 2
 
     habitual approach
 
+```java
+
+public static void pickName(final List<String> names, final String startingLetter){
+    String foundName = null;
+    for(String name: names){
+        if(name.startsWith(startingLetter)){
+            foundName = name;
+            break;
+        }
+    }
+    System.out.println(String.format("A name starting with %s: ",  startingLetter));
+
+    if(foundName != null){
+        System.out.println(foundName);
+    }else{
+        System.out.println("No name found");
+    }
+
+
+}
+
+```
+
+    Note
+        - We first created a foundName variable and initialized it to null
+            -  This will force a null check, and if we forget to deal with it the result could be a NullPointerException or an unpleasant response
+
+        - We had an external iterator to loop through the elements, but had to break out of the loop if we found an element
+            - primitive
+            - obsession
+            - imperative style, and
+            - mutability
+
+
+    Let’s rethink the problem
+
+```java
+
+public static void pickName(List<String> names, String startingLetter) {
+
+    Optional<String> foundName = names.stream()
+            .filter(name -> name.startsWith(startingLetter))
+            .findFirst();
+
+    System.out.println(String.format("A name starting with %s: %s", startingLetter, foundName.orElse("No name found")));
+}
+
+```
+
+    - First we used the filter() method to grab all the elements matching the desired pattern
+
+    - Then, findFirst() method of the Stream class helped pick the first value from that collection
+        - This method returns a special Optional object, which is the state-appointed null deodorizer in Java
+            - we can inquire if an object is present by using the isPresent() method
+            -  can obtain the current value using its get() method
+
+    Note:
+        - rather than providing an alternate value for the absent instance, we can ask Optional to run a
+        block of code or a lambda expression only if a value is present
+
+```java
+
+foundName.ifPresent(name -> System.out.println("Hello " + name));
+
+```
+
+    Note:
+        -  But are we doing more work in the fluent version than we did in the imperative version? 
+            The answer is no
+                - these methods have the smarts to perform only as much work as is necessary
+
+
+## Reducing a Collection to a Single Value
