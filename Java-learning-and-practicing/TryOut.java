@@ -1,66 +1,51 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintStream;
+import java.util.Formatter;
 import java.util.Scanner;
 
 public class TryOut {
 
     public static void main(String[] args) {
 
-        try {
-            File myFile = new File("./testerFile.txt");
-            // reading
-            Scanner myReader = new Scanner(myFile);
-            while (myReader.hasNextLine()) {
-                String data = myReader.nextLine();
-                System.out.println(data);
-            }
-            myReader.close();
+        PrintStream printer = System.out;
 
-        } catch (FileNotFoundException e) {
+        InputStream sender = System.in;
+
+        /*        
+        try{
+
+            int bytedata = sender.read();
+            printer.println(((int)bytedata));
+
+        } catch(IOException e){
+            printer.println(e.getMessage());
         }
+        printer.println(System.currentTimeMillis());
+        printer.println(System.getProperties());
+        
+                Formatter formatter = new Formatter();
+                System.out.println(formatter.format("%4$2s %3$2s %2$2s %1$2s", "a", "b", "c", "d"));
+
+                InputStream myInputStream = System.in;
+        
+                Scanner myScanner = new Scanner(myInputStream);
+                
+                        myScanner.useDelimiter(",");  // anytime it see , -> it recognises that a new pieoce of info is coming
+                        myScanner.useDelimiter("\n");  // anytime it see 'a new line' -> it recognises that a new pieoce of info is coming
+        */
+        
+        Scanner myScanner = new Scanner(System.in);
+        
+        System.out.println("Enter here: ");
+
+        String data = myScanner.nextLine();
+
+        System.out.println(data + "\n");
+
+
 
     }
 }
 
-/*
- * try {
- * File myFileObj = new File("./testerFile2.txt");
- * if (myFileObj.createNewFile()) {
- * System.out.println("File Created: " + myFileObj.getName() );
- * }else{
- * System.out.println("File exits");
- * }
- * 
- * } catch (IOException e) {
- * 
- * System.out.println("Error occured");
- * e.printStackTrace();
- * 
- * }
- * 
- * 
- * File myFile = new File("./testerFile.txt");
- * if (myFile.exists()) {
- * System.out.println("absolute path: " + myFile.getAbsolutePath());
- * System.out.println("name : " + myFile.getName());
- * System.out.println("Writable: " + myFile.canWrite());
- * System.out.println("Length : " + myFile.length());
- * }
- * 
- * 
- * // writing
- * try{
- * 
- * FileWriter myWriter = new FileWriter("./testerFile.txt");
- * myWriter.write("Studying file system");
- * myWriter.close();
- * 
- * } catch(IOException e){
- * System.out.println("error occured");
- * e.printStackTrace();
- * }
- * 
- * }
- */
+
