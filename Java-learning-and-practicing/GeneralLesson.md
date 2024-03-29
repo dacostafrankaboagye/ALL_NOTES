@@ -465,3 +465,170 @@ System.out.println(value); // null
 
 
 ```
+
+## Comparable
+
+    The Comparable interface is used to define how a class is to be sorted. It is not to be confused with the Comparator interface, which is implemented in a separate class. The Comparable interface is implemented in the class to be sorted.
+
+    Syntax
+    class MyClass implements Comparable<MyClass> {
+    // Class body.
+    ...
+    @Override public int compareTo(MyClass value)
+    {
+        // Comparison Logic
+        ...
+        return result;
+    }
+    }
+    Applying the Comparable interface to MyClass requires the implements keyword (e.g., Comparable<MyClass>). This interface has a single .compareTo() method that returns an int value based on whether the value of a current class instance (referenced by this) can be logically sorted with the value of another instance of the same class. The compareTo method should follow the contract defined by the Comparable interface. The comparison logic should be consistent with the equals method (i.e., if compareTo returns 0, equals should return true).
+
+    Return Value	Meaning
+    >= 1	this instance > passed instance
+    0	this instance = passed instance
+    <= -1	this instance < passed instance
+    This method determines how items are sorted by methods such as Arrays.sort() and Collections.sort().
+
+```java
+
+import java.util.Arrays;
+
+class Computer implements Comparable<Computer>{
+    private String name;
+    public String getName() {
+        return name;
+    }
+
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+
+    private int serialNumber;
+
+    public int getSerialNumber() {
+        return serialNumber;
+    }
+
+
+    public void setSerialNumber(int serialNumber) {
+        this.serialNumber = serialNumber;
+    }
+
+
+    Computer(String name, int serialNumber){
+        this.name = name;
+        this.serialNumber = serialNumber;
+    }
+
+
+    @Override
+    public int compareTo(Computer o) {
+        if(this.serialNumber > o.serialNumber){
+            return 1;
+        }else if(this.serialNumber < o.serialNumber){
+            return -1;
+        }else{
+
+            return 0;
+        }
+    }
+}
+
+public class TryOut2 {
+
+    public static void main(String[] args) {
+        Computer lenovo = new Computer("LENOVO", 98837);
+        Computer macBookPro = new Computer("MAC BOOK PRO -M1", 38001);
+
+        // The .sort() method uses the Comparable interface.
+        // Arrays.sort(a);
+
+        System.out.println(lenovo.compareTo(macBookPro));
+    }
+    
+}
+
+```
+
+```java
+import java.util.Arrays;
+
+class Computer implements Comparable<Computer>{
+    private String name;
+    public String getName() {
+        return name;
+    }
+
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+
+    private int serialNumber;
+
+    public int getSerialNumber() {
+        return serialNumber;
+    }
+
+
+    public void setSerialNumber(int serialNumber) {
+        this.serialNumber = serialNumber;
+    }
+
+
+    Computer(String name, int serialNumber){
+        this.name = name;
+        this.serialNumber = serialNumber;
+    }
+
+
+        // we comparing using the serial numbers
+    @Override
+    public int compareTo(Computer o) {
+        if(this.serialNumber > o.serialNumber){
+            return 1;
+        }else if(this.serialNumber < o.serialNumber){
+            return -1;
+        }else{
+
+            return 0;
+        }
+    }
+
+    @Override
+    public String toString() {
+
+        return getName() + " ("+getSerialNumber()+")";
+    }
+}
+
+public class TryOut2 {
+
+    public static void main(String[] args) {
+        Computer lenovo = new Computer("LENOVO", 98837);
+        Computer macBookPro = new Computer("MAC BOOK PRO -M1", 38001);
+
+        Computer[] myComputers = new Computer[4];
+        myComputers[0] = new Computer("LENOVO YOGA", 478001);
+        myComputers[1] = new Computer("LENOVO YOGA", 418001);
+        myComputers[2] = new Computer("LENOVO YOGA", 498001);
+        myComputers[3] = new Computer("LENOVO YOGA", 408001);
+
+
+        // The .sort() method uses the Comparable interface.
+        Arrays.sort(myComputers);
+
+        System.out.println(Arrays.toString(myComputers));
+
+        /*
+         [LENOVO YOGA (408001), LENOVO YOGA (418001), LENOVO YOGA (478001), LENOVO YOGA (498001)]
+
+         */
+    }
+    
+}
+
+```

@@ -1,5 +1,5 @@
 
-class Brand<T> {
+/*class Brand<T> {
 
     private T name;
 
@@ -57,12 +57,17 @@ class Computer {
         return " Life Span: " + getModel() + " - " + years;
     }
 
-}
+}*/
 
 public class TryOut {
 
     public static void main(String[] args) {
 
+        
+        
+        
+        
+        /*        
         Computer lenovoComputer = new Computer("Lenovo", "Yoga-7Y", 39800);
         Computer dellComputer = new Computer("Dell", "SP", 50019);
 
@@ -70,11 +75,6 @@ public class TryOut {
 
         System.out.println(myLenovoBrand.getName());
         
-
-
-
-        
-        /*        
         
                 PrintStream printer = System.out;
         
